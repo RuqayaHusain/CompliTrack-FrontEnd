@@ -1,4 +1,4 @@
-const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/users`;
+const BASE_URL = `${import.meta.env.VITE_BACK_END_SERVER_URL}/api/auth/users`;
 const  headers = { Authorization: `Bearer ${localStorage.getItem('token')}` }
 
 export const index = async () => {
