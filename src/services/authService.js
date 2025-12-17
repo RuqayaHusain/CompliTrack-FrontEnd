@@ -10,34 +10,30 @@ const signUp = async (formData) => {
     const res = await fetch(`${BASE_URL}/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      }),
     });
 
     const data = await res.json();
-
     if (data.err) {
       throw new Error(data.err);
     }
-
-    if (data.token) {
-      localStorage.setItem('token', data.token);
-      console.log(data.token)
-      return JSON.parse(atob(data.token.split('.')[1]))
-    }
-
-    throw new Error('Invalid response from server');
+    return data;
   } catch (err) {
     console.log(err);
     throw new Error(err);
   }
 };
 
-const signIn = async (formData) => {
+const signIn = async (user) => {
   try {
     const res = await fetch(`${BASE_URL}/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(user),
     });
 
     const data = await res.json();
@@ -47,18 +43,19 @@ const signIn = async (formData) => {
     }
 
     if (data.token) {
-      localStorage.setItem('token', data.token);
-      return JSON.parse(atob(data.token.split('.')[1]))
+      window.localStorage.setItem("token", data.token);
+      const rawPayload = data.token.split(".")[1];
+      const jsonPayload = window.atob(rawPayload);
+      const user = JSON.parse(jsonPayload);
+      return user;
     }
-
-    throw new Error('Invalid response from server');
   } catch (err) {
     console.log(err);
     throw new Error(err);
   }
 };
 
-const getUser = () =>  {
+const getUser = () => {
   try {
     const token = localStorage.getItem('token');
     if (!token) return null;
@@ -73,7 +70,7 @@ const signout = () => {
   localStorage.removeItem('token');
 };
 
-export { 
-  signUp, signIn, getUser, signout 
+export {
+  signUp, signIn, getUser, signout
 };
 

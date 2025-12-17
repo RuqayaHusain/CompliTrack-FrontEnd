@@ -19,12 +19,13 @@ const SignUpForm = () => {
   const [message, setMessage] = useState('');
   const [formData, setFormData] = useState({
     username: '',
+    email: '',
     password: '',
     passwordConf: '',
   });
 
 
-  const { username, password, passwordConf } = formData;
+  const { username, email, password, passwordConf } = formData;
 
   const handleChange = (evt) => {
     setMessage('');
@@ -47,7 +48,7 @@ const SignUpForm = () => {
   };
 
   const isFormInvalid = () => {
-    return !(username && password && password === passwordConf);
+    return !(username && email && password && password === passwordConf);
   };
 
   return (
@@ -62,6 +63,17 @@ const SignUpForm = () => {
             id='name'
             value={username}
             name='username'
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor='email'>Email:</label>
+          <input
+            type='email'
+            id='email'
+            value={email}
+            name='email'
             onChange={handleChange}
             required
           />
