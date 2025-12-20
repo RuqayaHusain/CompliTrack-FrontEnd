@@ -11,6 +11,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import { useContext } from 'react';
 import { UserContext } from './contexts/UserContext';
 import BusinessList from './components/BusinessList/BusinessList';
+import BusinessDetail from './components/BusinessDetail/BusinessDetail';
 
 const App = () => {
   const { user } = useContext(UserContext);
@@ -26,6 +27,7 @@ const App = () => {
             <Route path='/' element={<Dashboard/>}/>
             <Route path='/profile' element={<h1>{user.username}</h1>}/>
             <Route path='/businesses' element={<BusinessList />}/>
+            <Route path='/businesses/:businessId' element={<BusinessDetail />}/>
           </>
             :
             <Route path='/' element={<Landing/>}/>

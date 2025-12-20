@@ -37,7 +37,7 @@ const BusinessList = () => {
         <main>
             <div>
                 <h1>Businesses</h1>
-                <button onClick={() => navigate('/api/businesses/new')}>Add Business</button>
+                <button onClick={() => navigate('/businesses/new')}>Add Business</button>
             </div>
 
             <div>
@@ -85,7 +85,7 @@ const BusinessList = () => {
             {businesses.length === 0 ? (
                 <div>
                     <p>No businesses found. {filter.name || filter.industry ? 'Try different filters.' : 'Create your first business!'}</p>
-                    <button onClick={() => navigate('/api/businesses/new')}>
+                    <button onClick={() => navigate('/businesses/new')}>
                         Add Business
                     </button>
                 </div>
@@ -105,13 +105,6 @@ const BusinessList = () => {
                                         </div>
                                     )}
                                 </header>
-                                <div>
-                                    <p>{business.description || 'No description available.'}</p>
-                                    <div>
-                                        <p><strong>CR Number:</strong> {business.cr_number}</p>
-                                        <p><strong>Created:</strong> {new Date(business.created_at).toLocaleDateString()}</p>
-                                    </div>
-                                </div>
                                 <footer>
                                     <span>
                                         {business.licenses?.length || 0} licenses
