@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { showAllBusinesses } from '../../services/businessService';
 import Filter from "../Filter/Filter";
+import BusinessCard from "../BusinessCard/BusinessCard";
 
 const BusinessList = () => {
     const [businesses, setBusinesses] = useState([]);
@@ -60,27 +61,10 @@ const BusinessList = () => {
             ) : (
                 <div>
                     {businesses.map((business) => (
-                        <Link key={business.id} to={`/businesses/${business.id}`}>
-                            <article>
-                                <header>
-                                    <div>
-                                        <h2>{business.name}</h2>
-                                        <span>{business.industry}</span>
-                                    </div>
-                                    {business.image_url && (
-                                        <div>
-                                            <img src={business.image_url} alt={business.name} />
-                                        </div>
-                                    )}
-                                </header>
-                                <footer>
-                                    <span>
-                                        {business.licenses?.length || 0} licenses
-                                    </span>
-                                    <p>View Details</p>
-                                </footer>
-                            </article>
-                        </Link>
+                        <BusinessCard
+                            key={business.id}
+                            business={business}
+                        />
                     ))}
                 </div>
             )}
