@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
-import { showBusiness, deleteBusiness } from "../../services/businessService";
-const BusinessDetail = () => {
+import { showBusiness } from "../../services/businessService";
+const BusinessDetail = ({ handleDeleteBusiness }) => {
     const { businessId } = useParams();
     const { user } = useContext(UserContext);
 
@@ -19,14 +19,6 @@ const BusinessDetail = () => {
 
     if (!business) return <h3>Loading ...</h3>
 
-    const handleDeleteBusiness = async () => {
-        await deleteBusiness(businessId);
-        navigate('/businesses');
-    };
-
-    const handleUpdateBusiness = () => {
-        navigate(`/businesses/edit/${businessId}`);
-    };
 
     const isOwner = user && business.user_id === user.id;
 
@@ -36,8 +28,8 @@ const BusinessDetail = () => {
                 <h1>{business.name}</h1>
                 {isOwner && (
                     <div>
-                        <button onClick={handleUpdateBusiness}>Edit</button>
-                        <button onClick={handleDeleteBusiness}>Delete</button>
+                        <button onClick={() => navigate(`/businesses/edit/${businessId}`)}>Edit</button>
+                        <button onClick={() => handleDeleteBusiness(businessId)}>Delete</button>
                     </div>
                 )}
             </header>
