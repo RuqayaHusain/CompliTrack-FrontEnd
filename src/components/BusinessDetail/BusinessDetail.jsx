@@ -59,7 +59,14 @@ const BusinessDetail = ({ handleDeleteBusiness }) => {
 
             {activeTab === 'licenses' && (
                 <section>
-                    <h3>Licenses</h3>
+                    <div>
+                        <h3>Licenses</h3>
+                        {isOwner && (
+                            <button onClick={() => navigate(`/businesses/${businessId}/licenses/new`)}>
+                                Add License
+                            </button>
+                        )}
+                    </div>
                     <LicenseList businessId={businessId} />
                 </section>
             )}
