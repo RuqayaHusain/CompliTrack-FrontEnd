@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import { showBusiness } from '../../services/businessService';
+import { uploadImage } from '../../services/cloudinaryService';
 
 const BusinessForm = ({ handleAddBusiness, handleUpdateBusiness }) => {
     const { businessId } = useParams();
@@ -13,6 +14,11 @@ const BusinessForm = ({ handleAddBusiness, handleUpdateBusiness }) => {
         image_url: '',
     });
     const [validationMessage, setValidationMessage] = useState('');
+    const [imageFile, setImageFile] = useState(null);
+
+    const handleFileChange = (evt) => {
+        setImageFile(evt.target.files[0]);
+    };
 
     const handleChange = (evt) => {
         setFormData({
@@ -22,7 +28,7 @@ const BusinessForm = ({ handleAddBusiness, handleUpdateBusiness }) => {
         setValidationMessage('');
     };
 
-    const handleSubmit = (evt) => {
+    const handleSubmit = async (evt) => {
         evt.preventDefault();
         setValidationMessage('');
 
@@ -38,10 +44,21 @@ const BusinessForm = ({ handleAddBusiness, handleUpdateBusiness }) => {
             return setValidationMessage('Industry is required');
         }
 
+        let imageUrl = formData.image_url;
+
+        if (imageFile) {
+            imageUrl = await uploadImage(imageFile);
+        }
+
+        const updatedFormData = {
+            ...formData,
+            image_url: imageUrl,
+        };
+
         if (businessId) {
-            handleUpdateBusiness(businessId, formData);
+            handleUpdateBusiness(businessId, updatedFormData);
         } else {
-            handleAddBusiness(formData);
+            handleAddBusiness(updatedFormData);
         }
     };
 
@@ -120,13 +137,13 @@ const BusinessForm = ({ handleAddBusiness, handleUpdateBusiness }) => {
                     </option>
                 </select>
 
-                <label htmlFor="image_url">Image URL</label>
+                <label htmlFor="image">Business Image</label>
                 <input
-                    type="text"
-                    name="image_url"
-                    id="image_url"
-                    value={formData.image_url}
-                    onChange={handleChange}
+                    type="file"
+                    name="image"
+                    id="image"
+                    accept="image/*"
+                    onChange={handleFileChange}
                 />
 
                 <button type="submit">Submit</button>

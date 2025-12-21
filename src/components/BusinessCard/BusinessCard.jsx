@@ -10,16 +10,14 @@ const BusinessCard = ({ business }) => {
                         <h2>{business.name}</h2>
                         <span>{business.industry}</span>
                     </div>
-                    {business.image_url && (
-                        <div>
-                            <img src={business.image_url} alt={business.name} />
-                        </div>
-                    )}
                 </header>
                 <footer>
-                    <span>
+                    <p>
                         {business.licenses?.length || 0} licenses
-                    </span>
+                    </p>
+                    <p>
+                        {business.compliance_tasks?.length || 0} tasks
+                    </p>
                     <p>View Details</p>
                 </footer>
             </article>
