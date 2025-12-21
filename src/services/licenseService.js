@@ -5,8 +5,8 @@ const showAllLicenses = async (businessId, filters = {}) => {
         const params = new URLSearchParams();
         if (filters.name) params.append('name', filters.name);
         if (filters.license_status) params.append('license_status', filters.license_status);
-        if (filters.expiry_before) params.append('expiry_before', filters.expiry_before);
-        if (filters.expiry_after) params.append('expiry_after', filters.expiry_after);
+        if (filters.expiry_before) params.append('expiry_before', new Date(filters.expiry_before).toISOString());
+        if (filters.expiry_after) params.append('expiry_after', new Date(filters.expiry_after).toISOString());
 
         const token = localStorage.getItem('token');
 

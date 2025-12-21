@@ -40,6 +40,61 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
                 </>
             )}
 
+            {type === "license" && (
+                <>
+                    <h3>Filter Licenses</h3>
+
+                    <div>
+                        <label htmlFor="name">Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value={filter.name || ""}
+                            onChange={handleFilterChange}
+                            placeholder="Search by license name..."
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="license_status">Status:</label>
+                        <select
+                            id="license_status"
+                            name="license_status"
+                            value={filter.license_status || ""}
+                            onChange={handleFilterChange}
+                        >
+                            <option value="">All Statuses</option>
+                            <option value="Valid">Valid</option>
+                            <option value="Expired">Expired</option>
+                            <option value="Pending Renewal">Pending Renewal</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label htmlFor="expiry_before">Expiry Before:</label>
+                        <input
+                            type="date"
+                            id="expiry_before"
+                            name="expiry_before"
+                            value={filter.expiry_before || ""}
+                            onChange={handleFilterChange}
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="expiry_after">Expiry After:</label>
+                        <input
+                            type="date"
+                            id="expiry_after"
+                            name="expiry_after"
+                            value={filter.expiry_after || ""}
+                            onChange={handleFilterChange}
+                        />
+                    </div>
+                </>
+            )}
+
             <button onClick={handleClearFilters}>Clear Filters</button>
         </div>
     );
