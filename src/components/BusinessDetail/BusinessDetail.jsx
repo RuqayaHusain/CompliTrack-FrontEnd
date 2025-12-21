@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
 import { showBusiness } from "../../services/businessService";
+import LicenseList from "../LicenseList/LicenseList";
 const BusinessDetail = ({ handleDeleteBusiness }) => {
     const { businessId } = useParams();
     const { user } = useContext(UserContext);
 
     const [business, setBusiness] = useState(null);
+    const [activeTab, setActiveTab] = useState('details');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -41,41 +43,50 @@ const BusinessDetail = ({ handleDeleteBusiness }) => {
                 />
             )}
 
-            <section>
-                <p>{business.description || 'No description provided.'}</p>
-                <p><strong>Industry:</strong> {business.industry}</p>
-                <p><strong>CR Number:</strong> {business.cr_number}</p>
-            </section>
+            <div>
+                <button onClick={() => setActiveTab('details')}>Business Details</button>
+                <button onClick={() => setActiveTab('licenses')}>Licenses</button>
+                <button onClick={() => setActiveTab('tasks')}>Compliance Tasks</button>
+            </div>
 
-            <section>
-                <h3>Licenses</h3>
-                {business.licenses?.length > 0 ? (
-                    <ul>
-                        {business.licenses.map((license) => (
-                            <li key={license.id}>
-                                {license.name} — {license.status}
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No licenses added yet.</p>
-                )}
-            </section>
+            {activeTab === 'details' && (
+                    <section>
+                        <p>{business.description || 'No description provided.'}</p>
+                        <p><strong>Industry:</strong> {business.industry}</p>
+                        <p><strong>CR Number:</strong> {business.cr_number}</p>
+                    </section>
+            )}
 
-            <section>
-                <h3>Compliance Tasks</h3>
-                {business.compliance_tasks?.length > 0 ? (
-                    <ul>
-                        {business.compliance_tasks.map((task) => (
-                            <li key={task.id}>
-                                {task.title} — {task.status}
-                            </li>
-                        ))}
-                    </ul>
-                ) : (
-                    <p>No compliance tasks.</p>
-                )}
-            </section>
+            {activeTab === 'licenses' && (
+                <section>
+                    <div>
+                        <h3>Licenses</h3>
+                        {isOwner && (
+                            <button onClick={() => navigate(`/businesses/${businessId}/licenses/new`)}>
+                                Add License
+                            </button>
+                        )}
+                    </div>
+                    <LicenseList businessId={businessId} />
+                </section>
+            )}
+
+            {activeTab === 'tasks' && (
+                <section>
+                    <h3>Compliance Tasks</h3>
+                    {business.compliance_tasks?.length > 0 ? (
+                        <ul>
+                            {business.compliance_tasks.map((task) => (
+                                <li key={task.id}>
+                                    {task.title} — {task.status}
+                                </li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No compliance tasks.</p>
+                    )}
+                </section>
+            )}
         </main>
     );
 
