@@ -26,22 +26,7 @@ const BusinessDetail = ({ handleDeleteBusiness }) => {
 
     return (
         <main>
-            <header>
-                <h1>{business.name}</h1>
-                {isOwner && (
-                    <div>
-                        <button onClick={() => navigate(`/businesses/edit/${businessId}`)}>Edit</button>
-                        <button onClick={() => handleDeleteBusiness(businessId)}>Delete</button>
-                    </div>
-                )}
-            </header>
-
-            {business.image_url && (
-                <img
-                    src={business.image_url}
-                    alt={business.name}
-                />
-            )}
+            <h1>{business.name}</h1>
 
             <div>
                 <button onClick={() => setActiveTab('details')}>Business Details</button>
@@ -50,11 +35,23 @@ const BusinessDetail = ({ handleDeleteBusiness }) => {
             </div>
 
             {activeTab === 'details' && (
-                    <section>
-                        <p>{business.description || 'No description provided.'}</p>
-                        <p><strong>Industry:</strong> {business.industry}</p>
-                        <p><strong>CR Number:</strong> {business.cr_number}</p>
-                    </section>
+                <section>
+                    {business.image_url && (
+                        <img
+                            src={business.image_url}
+                            alt={business.name}
+                        />
+                    )}
+                    <p>{business.description || 'No description provided.'}</p>
+                    <p><strong>Industry:</strong> {business.industry}</p>
+                    <p><strong>CR Number:</strong> {business.cr_number}</p>
+                    {isOwner && (
+                        <div>
+                            <button onClick={() => navigate(`/businesses/edit/${businessId}`)}>Edit</button>
+                            <button onClick={() => handleDeleteBusiness(businessId)}>Delete</button>
+                        </div>
+                    )}
+                </section>
             )}
 
             {activeTab === 'licenses' && (
