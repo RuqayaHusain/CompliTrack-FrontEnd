@@ -16,6 +16,7 @@ import BusinessForm from './components/BusinessForm/BusinessForm';
 import { createBusiness, updateBusiness, deleteBusiness } from './services/businessService';
 import LicenseList from './components/LicenseList/LicenseList';
 import LicenseForm from './components/LicenseForm/LicenseForm';
+import LicenseDetail from './components/LicenseDetail/LicenseDetail';
 
 const App = () => {
   const [businesses, setBusinesses] = useState([]);
@@ -56,6 +57,7 @@ const App = () => {
               <Route path='/businesses/edit/:businessId' element={<BusinessForm handleUpdateBusiness={handleUpdateBusiness} />} />
               <Route path='/businesses/:businessId/licenses' element={<LicenseList />} />
               <Route path='/businesses/:businessId/licenses/new' element={<LicenseForm />} />
+              <Route path='/businesses/:businessId/licenses/:licenseId' element={<LicenseDetail />} />
             </>
             :
             <Route path='/' element={<Landing />} />
