@@ -69,20 +69,27 @@ const BusinessDetail = ({ handleDeleteBusiness }) => {
             )}
 
             {activeTab === 'tasks' && (
-                <section>
-                    <h3>Compliance Tasks</h3>
-                    {business.compliance_tasks?.length > 0 ? (
-                        <ul>
-                            {business.compliance_tasks.map((task) => (
+                 <section>
+                     <div>
+                          <h3>Compliance Tasks</h3>
+                           {isOwner && (
+                                <button onClick={() => navigate(`/businesses/${businessId}/compliance-tasks/new`)}>
+                                     Add Compliance Task
+                               </button>
+                           )}
+                      </div>
+                     {business.compliance_tasks?.length > 0 ? (
+                         <ul>
+                             {business.compliance_tasks.map((task) => (
                                 <li key={task.id}>
                                     {task.title} — {task.status}
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No compliance tasks.</p>
-                    )}
-                </section>
+                                 </li>
+                              ))}
+                         </ul>
+                         ) : (
+                          <p>No compliance tasks.</p>
+                         )}
+                    </section>
             )}
         </main>
     );
