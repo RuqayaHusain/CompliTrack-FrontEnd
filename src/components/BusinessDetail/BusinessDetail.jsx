@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
 import { showBusiness } from "../../services/businessService";
 import LicenseList from "../LicenseList/LicenseList";
+import ComplianceTaskList from "../ComplianceTaskList/ComplianceTaskList";
 const BusinessDetail = ({ handleDeleteBusiness }) => {
     const { businessId } = useParams();
     const { user } = useContext(UserContext);
@@ -68,28 +69,10 @@ const BusinessDetail = ({ handleDeleteBusiness }) => {
                 </section>
             )}
 
-            {activeTab === 'tasks' && (
-                 <section>
-                     <div>
-                          <h3>Compliance Tasks</h3>
-                           {isOwner && (
-                                <button onClick={() => navigate(`/businesses/${businessId}/compliance-tasks/new`)}>
-                                     Add Compliance Task
-                               </button>
-                           )}
-                      </div>
-                     {business.compliance_tasks?.length > 0 ? (
-                         <ul>
-                             {business.compliance_tasks.map((task) => (
-                                <li key={task.id}>
-                                    {task.title} — {task.status}
-                                 </li>
-                              ))}
-                         </ul>
-                         ) : (
-                          <p>No compliance tasks.</p>
-                         )}
-                    </section>
+           {activeTab === 'tasks' && (
+             <section>
+                  <ComplianceTaskList />
+             </section>
             )}
         </main>
     );

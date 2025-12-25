@@ -33,9 +33,17 @@ const ComplianceTaskForm = () => {
     };
 
     const handleAddTask = async (businessId, taskFormData) => {
-        await createComplianceTask(businessId, taskFormData);
-        navigate(`/businesses/${businessId}`);
+    const formattedData = {
+        ...taskFormData,
+        due_date: new Date(taskFormData.due_date).toISOString(),
+        submission_date: taskFormData.submission_date 
+            ? new Date(taskFormData.submission_date).toISOString() 
+            : null
     };
+    
+    await createComplianceTask(businessId, formattedData);
+    navigate(`/businesses/${businessId}`);
+};
 
     return (
         <main>
