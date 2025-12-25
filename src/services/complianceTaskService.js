@@ -41,3 +41,23 @@ const showComplianceTask = async (businessId, taskId) => {
         throw error;
     }
 };
+
+const createComplianceTask = async (businessId, taskFormData) => {
+    try {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch(`${BASE_URL}/${businessId}/compliance-tasks`, {
+            method: 'POST',
+            headers: {
+                'Authorization': token ? `Bearer ${token}` : '',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(taskFormData),
+        });
+
+        return response.json();
+    } catch (error) {
+        console.error('Error creating compliance task:', error);
+        throw error;
+    }
+};
