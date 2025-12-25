@@ -61,3 +61,50 @@ const createComplianceTask = async (businessId, taskFormData) => {
         throw error;
     }
 };
+
+
+const updateComplianceTask = async (businessId, taskId, taskFormData) => {
+    try {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch(`${BASE_URL}/${businessId}/compliance-tasks/${taskId}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': token ? `Bearer ${token}` : '',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(taskFormData),
+        });
+
+        return response.json();
+    } catch (error) {
+        console.error('Error updating compliance task:', error);
+        throw error;
+    }
+};
+
+const deleteComplianceTask = async (businessId, taskId) => {
+    try {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch(`${BASE_URL}/${businessId}/compliance-tasks/${taskId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': token ? `Bearer ${token}` : '',
+            },
+        });
+
+        return response.json();
+    } catch (error) {
+        console.error('Error deleting compliance task:', error);
+        throw error;
+    }
+};
+
+export {
+    showAllComplianceTasks,
+    showComplianceTask,
+    createComplianceTask,
+    updateComplianceTask,
+    deleteComplianceTask,
+};
