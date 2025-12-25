@@ -96,10 +96,32 @@ const updateLicense = async (businessId, licenseId, licenseFormData) => {
     }
 };
 
+const deleteLicense = async (businessId, licenseId) => {
+    try {
+        const token = localStorage.getItem('token');
 
+        const response = await fetch(`${BASE_URL}/${businessId}/licenses/${licenseId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': token ? `Bearer ${token}` : '',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error('Error deleting license:', error);
+        throw error;
+    }
+};
 
 export {
     showAllLicenses,
     showLicense,
     createLicense,
+    updateLicense,
+    deleteLicense
 };
