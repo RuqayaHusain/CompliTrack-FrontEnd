@@ -87,6 +87,8 @@ const LicenseList = () => {
                         <LicenseCard
                             key={license.id}
                             license={license}
+                            businessId={businessId}
+                            onDelete={(id)=>setLicenses(licenses.filter(l=>l.id !==id))}
                         />
                     ))}
                 </div>
