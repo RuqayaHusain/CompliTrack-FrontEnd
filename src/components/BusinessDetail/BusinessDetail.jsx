@@ -3,7 +3,8 @@ import { useNavigate, useParams } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
 import { showBusiness } from "../../services/businessService";
 import LicenseList from "../LicenseList/LicenseList";
-import ComplianceTaskList from "../ComplianceTaskList/ComplianceTaskList";
+import ComplianceTaskList from "../ComplianceTask/ComplianceTaskList";
+
 const BusinessDetail = ({ handleDeleteBusiness }) => {
     const { businessId } = useParams();
     const { user } = useContext(UserContext);

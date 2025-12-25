@@ -1,7 +1,5 @@
 import { Link } from "react-router";
 
-import { Link } from "react-router";
-
 const ComplianceTaskCard = ({ task, businessId }) => {
     return (
         <Link key={task.id} to={`/businesses/${businessId}/compliance-tasks/${task.id}`}>
