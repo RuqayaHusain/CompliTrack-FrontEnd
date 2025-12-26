@@ -7,6 +7,15 @@ const ComplianceTaskDetail = () => {
     const navigate = useNavigate();
     const [task, setTask] = useState(null);
 
+    const handleEdit = () => {
+        navigate(`/businesses/${businessId}/compliance-tasks/edit/${task.id}`);
+    };
+    
+    const handleDelete = async () => {
+        await deleteComplianceTask(businessId, taskId);
+        navigate(`/businesses/${businessId}`, { state: { activeTab: 'tasks' } });
+    };
+    
     useEffect(() => {
         const fetchTask = async () => {
             const taskData = await showComplianceTask(businessId, taskId);
@@ -14,11 +23,6 @@ const ComplianceTaskDetail = () => {
         };
         if (businessId && taskId) fetchTask();
     }, [businessId, taskId]);
-
-    const handleDelete = async () => {
-        await deleteComplianceTask(businessId, taskId);
-        navigate(`/businesses/${businessId}`, { state: { activeTab: 'tasks' } });
-    };
 
     if (!task) return <h3>Loading...</h3>;
      return (
@@ -41,7 +45,7 @@ const ComplianceTaskDetail = () => {
             </section>
 
             <div>
-                <button onClick={() => navigate(`/businesses/${businessId}/compliance-tasks/edit/${taskId}`)}>
+                <button onClick={handleEdit}>
                     Edit
                 </button>
                 <button onClick={handleDelete}>

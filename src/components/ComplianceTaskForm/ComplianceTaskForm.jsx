@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { createComplianceTask, showComplianceTask, updateComplianceTask } from "../../services/complianceTaskService";
 
 const ComplianceTaskForm = () => {
-    const { businessId , taskId } = useParams();
+    const { businessId, taskId } = useParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: '',
@@ -14,19 +14,19 @@ const ComplianceTaskForm = () => {
     });
     const isEditMode = Boolean(taskId);
 
-        useEffect(() => {
-             const fetchTask = async () => {
-                if (taskId) {
-                 const taskData = await showComplianceTask(businessId, taskId);
-                 setFormData({
-                     title: taskData.title,
-                     description: taskData.description,
-                     due_date: taskData.due_date ? taskData.due_date.split('T')[0] : '',
-                     status: taskData.status,
-                     submission_date: taskData.submission_date ? taskData.submission_date.split('T')[0] : '',
-                 });
-             }
-            };
+    useEffect(() => {
+        const fetchTask = async () => {
+            if (taskId) {
+                const taskData = await showComplianceTask(businessId, taskId);
+                setFormData({
+                    title: taskData.title,
+                    description: taskData.description,
+                    due_date: taskData.due_date ? taskData.due_date.split('T')[0] : '',
+                    status: taskData.status,
+                    submission_date: taskData.submission_date ? taskData.submission_date.split('T')[0] : '',
+                });
+            }
+        };
         fetchTask();
     }, [businessId, taskId]);
 
@@ -38,24 +38,26 @@ const ComplianceTaskForm = () => {
     };
 
     const handleSubmit = async (evt) => {
-        evt.preventDefault();         
+        evt.preventDefault();
         handleAddTask(businessId, formData);
     };
 
     const handleAddTask = async (businessId, taskFormData) => {
-    const formattedData = {
-        ...taskFormData,
-        due_date: new Date(taskFormData.due_date).toISOString(),
-        submission_date: taskFormData.submission_date 
-            ? new Date(taskFormData.submission_date).toISOString() 
-            : null
-    };
-    
-    if (isEditMode) {
-         await updateComplianceTask(businessId, taskId, formattedData);
-    } else {
-          await createComplianceTask(businessId, formattedData);
-    }    navigate(`/businesses/${businessId}`, { state: { activeTab: 'tasks' } });
+        const formattedData = {
+            ...taskFormData,
+            due_date: new Date(taskFormData.due_date).toISOString(),
+            submission_date: taskFormData.submission_date
+                ? new Date(taskFormData.submission_date).toISOString()
+                : null
+        };
+
+        if (isEditMode) {
+            await updateComplianceTask(businessId, taskId, formattedData);
+            navigate(`/businesses/${businessId}/compliance-tasks/${taskId}`);
+        } else {
+            await createComplianceTask(businessId, formattedData);
+            navigate(`/businesses/${businessId}`, { state: { activeTab: 'tasks' } });
+        }
     };
 
     return (
