@@ -73,13 +73,7 @@ const LicenseList = () => {
                             ? " Try different filters."
                             : " Add your first license!"}
                     </p>
-                    <button
-                        onClick={() =>
-                            navigate(`/businesses/${businessId}/licenses/new`)
-                        }
-                    >
-                        Add License
-                    </button>
+                    
                 </div>
             ) : (
                 <div>

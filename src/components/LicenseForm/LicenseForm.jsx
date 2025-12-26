@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
-import { createLicense } from "../../services/licenseService";
-
+import { createLicense, showLicense, updateLicense } from "../../services/licenseService";
 const LicenseForm = () => {
-    const { businessId } = useParams();
+    const { businessId , licenseId } = useParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
@@ -13,7 +12,25 @@ const LicenseForm = () => {
         status: 'Valid',
     });
     const [validationMessage, setValidationMessage] = useState('');
+    
+    const isEditMode = Boolean(licenseId);
 
+    useEffect(() => {
+     const fetchLicense = async () => {
+        if (licenseId) {
+            const licenseData = await showLicense(businessId, licenseId);
+            setFormData({
+                name: licenseData.name,
+                description: licenseData.description || '',
+                issue_date: licenseData.issue_date ? licenseData.issue_date.split('T')[0] : '',
+                expiry_date: licenseData.expiry_date ? licenseData.expiry_date.split('T')[0] : '',
+                status: licenseData.status,
+            });
+        }
+     };
+     fetchLicense();
+    }, [businessId, licenseId]);
+    
     const handleChange = (evt) => {
         setFormData({
             ...formData,
@@ -33,17 +50,17 @@ const LicenseForm = () => {
 
         if (expiryDate <= issueDate) return setValidationMessage('Expiry date must be after issue date');
                 
-        handleAddLicense(businessId, formData);
-    };
-
-    const handleAddLicense = async (businessId, licenseFormData) => {
-        await createLicense(businessId, licenseFormData);
-        navigate(`/businesses/${businessId}`);
-    };
+       if (isEditMode) {
+             await updateLicense(businessId, licenseId, formData);
+        } else {
+             await createLicense(businessId, formData);
+        }
+         navigate(`/businesses/${businessId}`);
+        };
 
     return (
         <main>
-            <h1>Add License</h1>
+            <h1>{isEditMode ? 'Edit License' : 'Add License'}</h1>
             {validationMessage && <p>{validationMessage}</p>}
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Name:</label>
