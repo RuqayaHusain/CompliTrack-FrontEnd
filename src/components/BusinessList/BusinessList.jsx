@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { showAllBusinesses } from '../../services/businessService';
 import Filter from "../Filter/Filter";
 import BusinessCard from "../BusinessCard/BusinessCard";
+import styles from './BusinessList.module.css';
 
 const BusinessList = () => {
     const [businesses, setBusinesses] = useState([]);
@@ -36,13 +37,18 @@ const BusinessList = () => {
     };
 
     return (
-        <main>
-            <div>
-                <h1>Businesses</h1>
-                <button onClick={() => navigate('/businesses/new')}>Add Business</button>
+        <main className={styles.container}>
+            <div className={styles.header}>
+                <h1 className={styles.title}>Businesses</h1>
+                <button
+                    className={`${styles.button} ${styles.primary}`}
+                    onClick={() => navigate('/businesses/new')}
+                >
+                    Add Business
+                </button>
             </div>
 
-            <div>
+            <div className={styles.filterWrapper}>
                 <Filter
                     type='business'
                     filter={filter}
@@ -51,20 +57,22 @@ const BusinessList = () => {
                 />
             </div>
 
-            {businesses.length === 0 ? (
-                <div>
-                    <p>No businesses found. {filter.name || filter.industry ? 'Try different filters.' : 'Create your first business!'}</p>
-                </div>
-            ) : (
-                <div>
-                    {businesses.map((business) => (
-                        <BusinessCard
-                            key={business.id}
-                            business={business}
-                        />
-                    ))}
-                </div>
-            )}
+            <div className={styles.list}>
+                {businesses.length === 0 ? (
+                    <p className={styles.message}>
+                        No businesses found.
+                        {filter.name ||
+                            filter.industry ?
+                            'Try different filters.'
+                            : 'Create your first business!'}
+                    </p>
+                ) : (
+                    businesses.map((business) => (
+                        <BusinessCard key={business.id} business={business} />
+                    ))
+                )}
+            </div>
+
         </main>
     );
 }

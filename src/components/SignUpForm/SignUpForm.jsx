@@ -60,7 +60,7 @@ const SignUpForm = () => {
         <p className={styles.message}>{message}</p>
         <form className={styles.form} onSubmit={handleSubmit}>
           <div className={styles.field}>
-            <label htmlFor='username'>Username:</label>
+            <label htmlFor='username'>Username</label>
             <input
               type='text'
               id='username'
@@ -71,7 +71,7 @@ const SignUpForm = () => {
             />
           </div>
           <div className={styles.field}>
-            <label htmlFor='email'>Email:</label>
+            <label htmlFor='email'>Email</label>
             <input
               type='email'
               id='email'
@@ -82,7 +82,7 @@ const SignUpForm = () => {
             />
           </div>
           <div className={styles.field}>
-            <label htmlFor='password'>Password:</label>
+            <label htmlFor='password'>Password</label>
             <input
               type='password'
               id='password'
@@ -93,7 +93,7 @@ const SignUpForm = () => {
             />
           </div>
           <div className={styles.field}>
-            <label htmlFor='passwordConf'>Confirm Password:</label>
+            <label htmlFor='passwordConf'>Confirm Password</label>
             <input
               type='password'
               id='passwordConf'

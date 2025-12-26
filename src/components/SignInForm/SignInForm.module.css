@@ -3,28 +3,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: var(--background);
+  padding: 2rem;
 }
 
 .card {
   width: 100%;
-  max-width: 420px;
+  max-width: 450px;
   background-color: var(--surface);
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  padding: 2.5rem 3rem;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .title {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 2rem;
+  font-weight: 700;
   color: var(--gray-dark);
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  text-align: center;
 }
 
 .message {
   min-height: 1.25rem;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--accent-danger);
   margin-bottom: 1rem;
 }
@@ -42,38 +49,45 @@
 }
 
 label {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   color: var(--gray-medium);
 }
 
 input {
-  padding: 0.55rem 0.65rem;
-  border-radius: 6px;
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
   border: 1px solid var(--gray-light);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  background-color: var(--input-bg);
+  color: var(--text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 input:focus {
   outline: none;
   border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
 }
 
 .actions {
   display: flex;
   justify-content: space-between;
   gap: 0.75rem;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .button {
   flex: 1;
-  padding: 0.55rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 500;
+  max-width: 180px;
+  padding: 0.6rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
   border: 1px solid transparent;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
 .primary {
@@ -83,6 +97,8 @@ input:focus {
 
 .primary:hover {
   background-color: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .secondary {
@@ -93,4 +109,24 @@ input:focus {
 
 .secondary:hover {
   background-color: var(--gray-light);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 2rem 1.5rem;
+  }
+
+  .title {
+    font-size: 1.6rem;
+  }
+
+  .button {
+    max-width: 100%;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
 }
