@@ -16,4 +16,33 @@ const Dashboard = () => {
   const [allTasks, setAllTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-   
+   useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const businessData = await showAllBusinesses();
+        setBusinesses(businessData);
+
+        const licenses = [];
+        const tasks = [];
+
+        for (const business of businessData) {
+          const businessLicenses = await showAllLicenses(business.id);
+          const businessTasks = await showAllComplianceTasks(business.id);
+          
+          licenses.push(...businessLicenses.map(l => ({ ...l, businessName: business.name, businessId: business.id })));
+          tasks.push(...businessTasks.map(t => ({ ...t, businessName: business.name, businessId: business.id })));
+        }
+
+        setAllLicenses(licenses);
+        setAllTasks(tasks);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+        setLoading(false);
+      }
+    };
+
+    if (user) fetchDashboardData();
+  }, [user]);
+
+  
