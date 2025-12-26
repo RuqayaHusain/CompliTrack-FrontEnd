@@ -1,13 +1,23 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
-import { showLicense } from "../../services/licenseService";
+import { deleteLicense, showLicense } from "../../services/licenseService";
 
 const LicenseDetail = () => {
     const { businessId, licenseId } = useParams();
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
 
     const [license, setLicense] = useState(null);
+
+    const handleEdit = () => {
+        navigate(`/businesses/${businessId}/licenses/edit/${license.id}`);
+    };
+
+    const handleDelete = async () => {
+        await deleteLicense(businessId, license.id);
+        navigate(`/businesses/${businessId}/licenses`);
+    };
 
     useEffect(() => {
         const fetchLicense = async () => {
@@ -41,8 +51,11 @@ const LicenseDetail = () => {
             </p>
             {isOwner && (
                 <div>
-                    <button>Edit</button>
-                    <button>Delete</button>
+                    <button onClick={handleEdit}>Edit</button>
+                    <button onClick={handleDelete}>Delete</button>
+                    <button onClick={() => navigate(`/businesses/${businessId}`, { state: { activeTab: 'licenses' } })}>
+                        Back to Business
+                    </button>
                 </div>
             )}
         </main>

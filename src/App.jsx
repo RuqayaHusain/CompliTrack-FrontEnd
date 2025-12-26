@@ -58,13 +58,12 @@ const App = () => {
               <Route path='/businesses/new' element={<BusinessForm handleAddBusiness={handleAddBusiness} />} />
               <Route path='/businesses/edit/:businessId' element={<BusinessForm handleUpdateBusiness={handleUpdateBusiness} />} />
               <Route path='/businesses/:businessId/licenses' element={<LicenseList />} />
+              <Route path='/businesses/:businessId/licenses/:licenseId' element={<LicenseDetail />} />
               <Route path='/businesses/:businessId/licenses/new' element={<LicenseForm />} />
               <Route path='/businesses/:businessId/compliance-tasks/new' element={<ComplianceTaskForm />} />
               <Route path='/businesses/:businessId/licenses/edit/:licenseId' element={<LicenseForm />} />
               <Route path='/businesses/:businessId/compliance-tasks/edit/:taskId' element={<ComplianceTaskForm />} />
               <Route path='/businesses/:businessId/compliance-tasks/:taskId' element={<ComplianceTaskDetail />} />
-
-              <Route path='/businesses/:businessId/licenses/:licenseId' element={<LicenseDetail />} />
             </>
             :
             <Route path='/' element={<Landing />} />

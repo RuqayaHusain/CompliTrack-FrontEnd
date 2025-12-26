@@ -1,24 +1,8 @@
-import { Link, useNavigate } from "react-router";
-import { deleteLicense } from "../../services/licenseService";
+import { Link } from "react-router";
 
-const LicenseCard = ({ license ,businessId, onDelete }) => {
-    const navigate = useNavigate();
-
-    const handleEdit = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        navigate(`/businesses/${businessId}/licenses/edit/${license.id}`);
-    };
-
-    const handleDelete = async (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        await deleteLicense(businessId, license.id);
-        if (onDelete) onDelete(license.id);
-    };
-
+const LicenseCard = ({ license, businessId }) => {
     return (
-        <Link key={license.id} to={`licenses/${license.id}`}>
+        <Link key={license.id} to={`/businesses/${businessId}/licenses/${license.id}`}>
             <article>
                 <div>
                     <h2>{license.name}</h2>
@@ -32,8 +16,6 @@ const LicenseCard = ({ license ,businessId, onDelete }) => {
                 </div>
                 <div>
                     <p>View Details</p>
-                     <button onClick={handleEdit}>Edit</button>
-                    <button onClick={handleDelete}>Delete</button>
                 </div>
             </article>
         </Link>
