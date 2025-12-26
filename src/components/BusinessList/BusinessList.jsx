@@ -54,9 +54,6 @@ const BusinessList = () => {
             {businesses.length === 0 ? (
                 <div>
                     <p>No businesses found. {filter.name || filter.industry ? 'Try different filters.' : 'Create your first business!'}</p>
-                    <button onClick={() => navigate('/businesses/new')}>
-                        Add Business
-                    </button>
                 </div>
             ) : (
                 <div>

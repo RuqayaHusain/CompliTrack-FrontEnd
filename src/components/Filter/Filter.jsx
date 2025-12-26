@@ -95,6 +95,61 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
                 </>
             )}
 
+            {type === "task" && (
+                <>
+                    <h3>Filter Tasks</h3>
+
+                    <div>
+                        <label htmlFor="title">Title:</label>
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            value={filter.title || ""}
+                            onChange={handleFilterChange}
+                            placeholder="Search by task title..."
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="task_status">Status:</label>
+                        <select
+                            id="task_status"
+                            name="task_status"
+                            value={filter.task_status || ""}
+                            onChange={handleFilterChange}
+                        >
+                            <option value="">All Statuses</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Submitted">Submitted</option>
+                            <option value="Late">Late</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label htmlFor="due_before">Due Before:</label>
+                        <input
+                            type="date"
+                            id="due_before"
+                            name="due_before"
+                            value={filter.due_before || ""}
+                            onChange={handleFilterChange}
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="due_after">Due After:</label>
+                        <input
+                            type="date"
+                            id="due_after"
+                            name="due_after"
+                            value={filter.due_after || ""}
+                            onChange={handleFilterChange}
+                        />
+                    </div>
+                </>
+            )}
+
             <button onClick={handleClearFilters}>Clear Filters</button>
         </div>
     );
