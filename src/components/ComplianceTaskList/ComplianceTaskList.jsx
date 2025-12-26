@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { showAllComplianceTasks } from "../../services/complianceTaskService";
-import ComplianceTaskCard from "../ComplianceTask/ComplianceTaskCard";
+import ComplianceTaskCard from "../ComplianceTaskCard/ComplianceTaskCard";
+
 
 const ComplianceTaskList = () => {
     const { businessId } = useParams();

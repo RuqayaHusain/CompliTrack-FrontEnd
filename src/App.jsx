@@ -16,8 +16,8 @@ import BusinessForm from './components/BusinessForm/BusinessForm';
 import { createBusiness, updateBusiness, deleteBusiness } from './services/businessService';
 import LicenseList from './components/LicenseList/LicenseList';
 import LicenseForm from './components/LicenseForm/LicenseForm';
-import ComplianceTaskForm from './components/ComplianceTask/ComplianceTaskForm';
-import ComplianceTaskDetail from './components/ComplianceTask/ComplianceTaskDetail';
+import ComplianceTaskForm from './components/ComplianceTaskForm/ComplianceTaskForm';
+import ComplianceTaskDetail from './components/ComplianceTaskDetail/ComplianceTaskDetail';
 import LicenseDetail from './components/LicenseDetail/LicenseDetail';
 
 const App = () => {

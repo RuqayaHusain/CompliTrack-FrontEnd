@@ -3,7 +3,7 @@ import { useNavigate, useParams , useLocation } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
 import { showBusiness } from "../../services/businessService";
 import LicenseList from "../LicenseList/LicenseList";
-import ComplianceTaskList from "../ComplianceTask/ComplianceTaskList";
+import ComplianceTaskList from "../ComplianceTaskList/ComplianceTaskList";
 
 const BusinessDetail = ({ handleDeleteBusiness }) => {
     const { businessId } = useParams();
