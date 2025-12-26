@@ -81,7 +81,7 @@ const Dashboard = () => {
   }
   return (
     <main className={styles.dashboard}>
-      
+
       <header className={styles.header}>
         <h1>Welcome, {user.username}</h1>
         <p>Dashboard Overview - {businesses.length} businesses tracked</p>
