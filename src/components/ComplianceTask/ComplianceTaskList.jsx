@@ -20,13 +20,6 @@ const ComplianceTaskList = () => {
         <main>
             <div>
                 <h1>Compliance Tasks</h1>
-                <button
-                    onClick={() =>
-                        navigate(`/businesses/${businessId}/compliance-tasks/new`)
-                    }
-                >
-                    Add Compliance Task
-                </button>
             </div>
 
             {tasks.length === 0 ? (
@@ -47,6 +40,7 @@ const ComplianceTaskList = () => {
                             key={task.id}
                             task={task}
                             businessId={businessId}
+                             onDelete={(id) => setTasks(tasks.filter(t => t.id !== id))}
                         />
                     ))}
                 </div>

@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
-import { createComplianceTask } from "../../services/complianceTaskService";
+import { createComplianceTask, showComplianceTask, updateComplianceTask } from "../../services/complianceTaskService";
 
 const ComplianceTaskForm = () => {
-    const { businessId } = useParams();
+    const { businessId , taskId } = useParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: '',
@@ -12,23 +12,33 @@ const ComplianceTaskForm = () => {
         status: 'Pending',
         submission_date: '',
     });
-    const [validationMessage, setValidationMessage] = useState('');
+    const isEditMode = Boolean(taskId);
+
+        useEffect(() => {
+             const fetchTask = async () => {
+                if (taskId) {
+                 const taskData = await showComplianceTask(businessId, taskId);
+                 setFormData({
+                     title: taskData.title,
+                     description: taskData.description,
+                     due_date: taskData.due_date ? taskData.due_date.split('T')[0] : '',
+                     status: taskData.status,
+                     submission_date: taskData.submission_date ? taskData.submission_date.split('T')[0] : '',
+                 });
+             }
+            };
+        fetchTask();
+    }, [businessId, taskId]);
 
     const handleChange = (evt) => {
         setFormData({
             ...formData,
             [evt.target.name]: evt.target.value
         });
-        setValidationMessage('');
     };
 
     const handleSubmit = async (evt) => {
-        evt.preventDefault();
-        if (!formData.title.trim()) return setValidationMessage('Task title is required');
-        if (!formData.description.trim()) return setValidationMessage('Task description is required');
-        if (!formData.due_date) return setValidationMessage('Due date is required');
-        if (!formData.status) return setValidationMessage('Status is required');
-                
+        evt.preventDefault();         
         handleAddTask(businessId, formData);
     };
 
@@ -41,14 +51,16 @@ const ComplianceTaskForm = () => {
             : null
     };
     
-    await createComplianceTask(businessId, formattedData);
-    navigate(`/businesses/${businessId}`);
-};
+    if (isEditMode) {
+         await updateComplianceTask(businessId, taskId, formattedData);
+    } else {
+          await createComplianceTask(businessId, formattedData);
+    }    navigate(`/businesses/${businessId}`, { state: { activeTab: 'tasks' } });
+    };
 
     return (
         <main>
-            <h1>Add Compliance Task</h1>
-            {validationMessage && <p>{validationMessage}</p>}
+            <h1>{isEditMode ? 'Edit Compliance Task' : 'Add Compliance Task'}</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="title">Title:</label>
                 <input

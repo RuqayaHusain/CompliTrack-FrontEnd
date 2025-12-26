@@ -59,6 +59,8 @@ const App = () => {
               <Route path='/businesses/:businessId/licenses/new' element={<LicenseForm />} />
               <Route path='/businesses/:businessId/compliance-tasks/new' element={<ComplianceTaskForm />} />
               <Route path='/businesses/:businessId/licenses/edit/:licenseId' element={<LicenseForm />} />
+              <Route path='/businesses/:businessId/compliance-tasks/edit/:taskId' element={<ComplianceTaskForm />} />
+
             </>
             :
             <Route path='/' element={<Landing />} />
