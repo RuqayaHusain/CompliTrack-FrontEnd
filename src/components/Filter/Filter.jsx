@@ -1,12 +1,14 @@
+import styles from './Filter.module.css';
+
 const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
 
     return (
-        <div>
+        <div className={styles.container}>
             {type === "business" && (
                 <>
-                    <h3>Filter Businesses</h3>
-                    <div>
-                        <label htmlFor="name">Name:</label>
+                    <h3 className={styles.header}>Filter Businesses</h3>
+                    <div className={styles.field}>
+                        <label htmlFor="name">Name</label>
                         <input
                             type="text"
                             id="name"
@@ -17,8 +19,8 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="industry">Industry:</label>
+                    <div className={styles.field}>
+                        <label htmlFor="industry">Industry</label>
                         <select
                             id="industry"
                             name="industry"
@@ -42,10 +44,10 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
 
             {type === "license" && (
                 <>
-                    <h3>Filter Licenses</h3>
+                    <h3 className={styles.header}>Filter Licenses</h3>
 
-                    <div>
-                        <label htmlFor="name">Name:</label>
+                    <div className={styles.field}>
+                        <label htmlFor="name">Name</label>
                         <input
                             type="text"
                             id="name"
@@ -56,8 +58,8 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="license_status">Status:</label>
+                    <div className={styles.field}>
+                        <label htmlFor="license_status">Status</label>
                         <select
                             id="license_status"
                             name="license_status"
@@ -71,8 +73,8 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
                         </select>
                     </div>
 
-                    <div>
-                        <label htmlFor="expiry_before">Expiry Before:</label>
+                    <div className={styles.field}>
+                        <label htmlFor="expiry_before">Expiry Before</label>
                         <input
                             type="date"
                             id="expiry_before"
@@ -82,8 +84,8 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="expiry_after">Expiry After:</label>
+                    <div className={styles.field}>
+                        <label htmlFor="expiry_after">Expiry After</label>
                         <input
                             type="date"
                             id="expiry_after"
@@ -97,10 +99,10 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
 
             {type === "task" && (
                 <>
-                    <h3>Filter Tasks</h3>
+                    <h3 className={styles.header}>Filter Compliance Tasks</h3>
 
-                    <div>
-                        <label htmlFor="title">Title:</label>
+                    <div className={styles.field}>
+                        <label htmlFor="title">Title</label>
                         <input
                             type="text"
                             id="title"
@@ -111,8 +113,8 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="task_status">Status:</label>
+                    <div className={styles.field}>
+                        <label htmlFor="task_status">Status</label>
                         <select
                             id="task_status"
                             name="task_status"
@@ -126,8 +128,8 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
                         </select>
                     </div>
 
-                    <div>
-                        <label htmlFor="due_before">Due Before:</label>
+                    <div className={styles.field}>
+                        <label htmlFor="due_before">Due Before</label>
                         <input
                             type="date"
                             id="due_before"
@@ -137,8 +139,8 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="due_after">Due After:</label>
+                    <div className={styles.field}>
+                        <label htmlFor="due_after">Due After</label>
                         <input
                             type="date"
                             id="due_after"
@@ -150,7 +152,7 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
                 </>
             )}
 
-            <button onClick={handleClearFilters}>Clear Filters</button>
+            <button onClick={handleClearFilters} className={styles.button}>Clear Filters</button>
         </div>
     );
 };
