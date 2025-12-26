@@ -22,8 +22,7 @@ const showAllLicenses = async (businessId, filters = {}) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error fetching licenses:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 
@@ -43,8 +42,7 @@ const showLicense = async (businessId, licenseId) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error fetching licenses:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 
@@ -67,8 +65,7 @@ const createLicense = async (businessId, licenseFormData) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error fetching licenses:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 
@@ -91,8 +88,7 @@ const updateLicense = async (businessId, licenseId, licenseFormData) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error updating license:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 
@@ -113,8 +109,7 @@ const deleteLicense = async (businessId, licenseId) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error deleting license:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 

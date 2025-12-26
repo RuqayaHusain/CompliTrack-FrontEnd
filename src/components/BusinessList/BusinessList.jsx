@@ -59,13 +59,14 @@ const BusinessList = () => {
 
             <div className={styles.list}>
                 {businesses.length === 0 ? (
-                    <p className={styles.message}>
-                        No businesses found.
-                        {filter.name ||
-                            filter.industry ?
-                            'Try different filters.'
-                            : 'Create your first business!'}
-                    </p>
+                    <div className={styles.empty}>
+                        <p>No businesses found.</p>
+                        {(filter.name || filter.industry) ? (
+                            <small>Try different filters.</small>
+                        ) : (
+                            <small>Create your first business!</small>
+                        )}
+                    </div>
                 ) : (
                     businesses.map((business) => (
                         <BusinessCard key={business.id} business={business} />

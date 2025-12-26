@@ -2,7 +2,7 @@
 
 // Import the useContext hook
 import { useContext } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 // Import the UserContext object
 import { UserContext } from '../../contexts/UserContext';
@@ -17,12 +17,14 @@ const NavBar = () => {
   // Destructure the object returned by the useContext hook for easy access
   // to the data we added to the context with familiar names.
   const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleSignOut = () => {
     // Clear the token from localStorage
     localStorage.removeItem('token');
     // Clear the user state
     setUser(null);
+    navigate('/');
   };
 
   return (

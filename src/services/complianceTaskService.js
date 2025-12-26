@@ -22,8 +22,7 @@ const showAllComplianceTasks = async (businessId, filters = {}) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error fetching compliance tasks:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 
@@ -43,8 +42,7 @@ const showComplianceTask = async (businessId, taskId) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error fetching compliance task:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 
@@ -63,8 +61,7 @@ const createComplianceTask = async (businessId, taskFormData) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error creating compliance task:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 
@@ -84,8 +81,7 @@ const updateComplianceTask = async (businessId, taskId, taskFormData) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error updating compliance task:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 
@@ -102,8 +98,7 @@ const deleteComplianceTask = async (businessId, taskId) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error deleting compliance task:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 
