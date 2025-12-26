@@ -1,15 +1,17 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate, useParams , useLocation } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
 import { showBusiness } from "../../services/businessService";
 import LicenseList from "../LicenseList/LicenseList";
+import ComplianceTaskList from "../ComplianceTask/ComplianceTaskList";
+
 const BusinessDetail = ({ handleDeleteBusiness }) => {
     const { businessId } = useParams();
     const { user } = useContext(UserContext);
 
     const [business, setBusiness] = useState(null);
-    const [activeTab, setActiveTab] = useState('details');
-    const navigate = useNavigate();
+    const location = useLocation();
+    const [activeTab, setActiveTab] = useState(location.state?.activeTab || 'details');    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchBusiness = async () => {
@@ -60,21 +62,10 @@ const BusinessDetail = ({ handleDeleteBusiness }) => {
                 </section>
             )}
 
-            {activeTab === 'tasks' && (
-                <section>
-                    <h3>Compliance Tasks</h3>
-                    {business.compliance_tasks?.length > 0 ? (
-                        <ul>
-                            {business.compliance_tasks.map((task) => (
-                                <li key={task.id}>
-                                    {task.title} — {task.status}
-                                </li>
-                            ))}
-                        </ul>
-                    ) : (
-                        <p>No compliance tasks.</p>
-                    )}
-                </section>
+           {activeTab === 'tasks' && (
+             <section>
+                  <ComplianceTaskList />
+             </section>
             )}
         </main>
     );

@@ -72,8 +72,56 @@ const createLicense = async (businessId, licenseFormData) => {
     }
 };
 
+const updateLicense = async (businessId, licenseId, licenseFormData) => {
+    try {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch(`${BASE_URL}/${businessId}/licenses/${licenseId}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': token ? `Bearer ${token}` : '',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(licenseFormData),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error('Error updating license:', error);
+        throw error;
+    }
+};
+
+const deleteLicense = async (businessId, licenseId) => {
+    try {
+        const token = localStorage.getItem('token');
+
+        const response = await fetch(`${BASE_URL}/${businessId}/licenses/${licenseId}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': token ? `Bearer ${token}` : '',
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error('Error deleting license:', error);
+        throw error;
+    }
+};
+
 export {
     showAllLicenses,
     showLicense,
     createLicense,
+    updateLicense,
+    deleteLicense
 };

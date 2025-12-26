@@ -73,13 +73,7 @@ const LicenseList = () => {
                             ? " Try different filters."
                             : " Add your first license!"}
                     </p>
-                    <button
-                        onClick={() =>
-                            navigate(`/businesses/${businessId}/licenses/new`)
-                        }
-                    >
-                        Add License
-                    </button>
+                    
                 </div>
             ) : (
                 <div>
@@ -87,6 +81,8 @@ const LicenseList = () => {
                         <LicenseCard
                             key={license.id}
                             license={license}
+                            businessId={businessId}
+                            onDelete={(id)=>setLicenses(licenses.filter(l=>l.id !==id))}
                         />
                     ))}
                 </div>
