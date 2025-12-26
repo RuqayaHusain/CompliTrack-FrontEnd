@@ -2,10 +2,12 @@
 
 // Import the useContext hook
 import { useContext } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 // Import the UserContext object
 import { UserContext } from '../../contexts/UserContext';
+
+import styles from './NavBar.module.css';
 
 const NavBar = () => {
   // Pass the UserContext object to the useContext hook to access:
@@ -15,27 +17,87 @@ const NavBar = () => {
   // Destructure the object returned by the useContext hook for easy access
   // to the data we added to the context with familiar names.
   const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
 
-   const handleSignOut = () => {
+  const handleSignOut = () => {
     // Clear the token from localStorage
     localStorage.removeItem('token');
     // Clear the user state
     setUser(null);
+    navigate('/');
   };
 
   return (
-    <nav>
+    <nav className={styles.navbar}>
       {user ? (
-        <ul>
-          <li>Welcome, {user.username}</li>
-          <li><Link to='/'>Dashboard</Link></li>
-          <li><Link to='/' onClick={handleSignOut}>Sign Out</Link></li>
+        <ul className={styles.navList}>
+          <div className={styles.left}>
+            <li className={styles.brand}>
+              {user.username}
+            </li>
+
+            <li>
+              <Link
+                to="/"
+                className={`${styles.navButton} ${styles.primary}`}
+              >
+                Dashboard
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="/businesses"
+                className={`${styles.navButton} ${styles.secondary}`}
+              >
+                Businesses
+              </Link>
+            </li>
+          </div>
+
+          <div className={styles.right}>
+            <li>
+              <button
+                onClick={handleSignOut}
+                className={`${styles.navButton} ${styles.signOut}`}
+              >
+                Sign Out
+              </button>
+            </li>
+          </div>
         </ul>
       ) : (
-        <ul>
-          <li><Link to='/'>Home</Link></li>
-          <li><Link to='/register'>Sign Up</Link></li>
-          <li><Link to='/login'>Sign In</Link></li>
+        <ul className={styles.navList}>
+          <div className={styles.left}>
+            <li>
+              <Link
+                to="/"
+                className={`${styles.navButton}`}
+              >
+                Home
+              </Link>
+            </li>
+          </div>
+
+          <div className={styles.right}>
+            <li>
+              <Link
+                to="/register"
+                className={`${styles.navButton}`}
+              >
+                Sign Up
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                to="/login"
+                className={`${styles.navButton}`}
+              >
+                Sign In
+              </Link>
+            </li>
+          </div>
         </ul>
       )}
     </nav>

@@ -1,0 +1,112 @@
+.dashboard {
+  padding: 2rem;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: 2.5rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+  color: var(--gray-dark);
+}
+
+.header p {
+  color: var(--gray-medium);
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.sectionHeader {
+  margin-bottom: 1rem;
+}
+
+.sectionHeader h2 {
+  font-size: 1.4rem;
+  color: var(--gray-dark);
+}
+
+.cardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.card {
+  background-color: var(--surface);
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+  border-left: 6px solid transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 0.35rem;
+  color: var(--gray-dark);
+}
+
+.card p {
+  font-size: 0.9rem;
+  color: var(--gray-medium);
+  margin-bottom: 0.25rem;
+}
+
+.expired {
+  border-left-color: var(--accent-danger);
+}
+
+.overdue {
+  border-left-color: var(--accent-danger);
+}
+
+.warning {
+  border-left-color: var(--accent-warning);
+}
+
+.upcoming {
+  border-left-color: var(--accent-success);
+}
+
+.button {
+  align-self: flex-start;
+  margin-top: 0.75rem;
+  background-color: var(--primary);
+  color: white;
+  padding: 0.45rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  transition: background-color 0.2s ease;
+}
+
+.button:hover {
+  background-color: var(--primary-dark);
+}
+
+.empty {
+  font-size: 0.9rem;
+  color: var(--gray-medium);
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 1.25rem;
+  }
+
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .sectionHeader h2 {
+    font-size: 1.2rem;
+  }
+}

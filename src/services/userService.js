@@ -14,10 +14,8 @@ export const index = async () => {
       throw new Error(data.err);
     }
 
-    console.log(data)
     return data
   } catch (err) {
-    console.log(err);
     throw new Error(err);
   }
 }
