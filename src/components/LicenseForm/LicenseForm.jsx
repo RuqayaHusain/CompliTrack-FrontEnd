@@ -61,6 +61,14 @@ const LicenseForm = () => {
         }
     };
 
+    const handleCancelButton = () => {
+        if (isEditMode) {
+            navigate(`/businesses/${businessId}/licenses/${licenseId}`);
+        } else {
+            navigate(`/businesses/${businessId}`, { state: { activeTab: 'licenses' } });
+        }
+    };
+
     return (
         <main className={styles.container}>
             <div className={styles.card}>
@@ -97,7 +105,16 @@ const LicenseForm = () => {
                         </select>
                     </div>
 
-                    <button type="submit">Submit</button>
+                    <div className={styles.buttonGroup}>
+                        <button type="submit" className={styles.submitButton}>Submit</button>
+                        <button
+                            type="button"
+                            className={styles.cancelButton}
+                            onClick={handleCancelButton}
+                        >
+                            Cancel
+                        </button>
+                    </div>
                 </form>
             </div>
         </main>

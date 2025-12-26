@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import { showBusiness } from '../../services/businessService';
 import { uploadImage } from '../../services/cloudinaryService';
 import styles from './BusinessForm.module.css';
 
 const BusinessForm = ({ handleAddBusiness, handleUpdateBusiness }) => {
     const { businessId } = useParams();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         name: '',
@@ -60,6 +61,14 @@ const BusinessForm = ({ handleAddBusiness, handleUpdateBusiness }) => {
             handleUpdateBusiness(businessId, updatedFormData);
         } else {
             handleAddBusiness(updatedFormData);
+        }
+    };
+
+    const handleCancelButton = () => {
+        if (businessId) {
+            navigate(`/businesses/${businessId}`, { state: { activeTab: 'details' } });
+        } else {
+            navigate('/businesses');
         }
     };
 
@@ -171,7 +180,16 @@ const BusinessForm = ({ handleAddBusiness, handleUpdateBusiness }) => {
                         </div>
                     </div>
 
-                    <button type="submit">Submit</button>
+                    <div className={styles.buttonGroup}>
+                        <button type="submit" className={styles.submitButton}>Submit</button>
+                        <button
+                            type="button"
+                            className={styles.cancelButton}
+                            onClick={handleCancelButton}
+                        >
+                            Cancel
+                        </button>
+                    </div>
                 </form>
             </div>
         </main>
