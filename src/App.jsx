@@ -18,6 +18,7 @@ import LicenseList from './components/LicenseList/LicenseList';
 import LicenseForm from './components/LicenseForm/LicenseForm';
 import ComplianceTaskForm from './components/ComplianceTask/ComplianceTaskForm';
 import ComplianceTaskDetail from './components/ComplianceTask/ComplianceTaskDetail';
+import LicenseDetail from './components/LicenseDetail/LicenseDetail';
 
 const App = () => {
   const [businesses, setBusinesses] = useState([]);
@@ -63,6 +64,7 @@ const App = () => {
               <Route path='/businesses/:businessId/compliance-tasks/edit/:taskId' element={<ComplianceTaskForm />} />
               <Route path='/businesses/:businessId/compliance-tasks/:taskId' element={<ComplianceTaskDetail />} />
 
+              <Route path='/businesses/:businessId/licenses/:licenseId' element={<LicenseDetail />} />
             </>
             :
             <Route path='/' element={<Landing />} />

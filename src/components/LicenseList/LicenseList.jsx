@@ -43,7 +43,7 @@ const LicenseList = () => {
     return (
         <main>
             <div>
-                <h1>Licenses</h1>
+                <h2>Licenses</h2>
                 <button
                     onClick={() =>
                         navigate(`/businesses/${businessId}/licenses/new`)
