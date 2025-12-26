@@ -20,8 +20,7 @@ const showAllBusinesses = async (filters = {}) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error fetching businesses:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 
@@ -41,8 +40,7 @@ const showBusiness = async (businessId) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error fetching business:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 
@@ -61,8 +59,7 @@ const createBusiness = async (businessFormData) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error fetching business:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 
@@ -81,8 +78,7 @@ const updateBusiness = async (businessId, businessFormData) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error fetching business:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 
@@ -99,8 +95,7 @@ const deleteBusiness = async (businessId) => {
 
         return response.json();
     } catch (error) {
-        console.error('Error fetching business:', error);
-        throw error;
+        throw new Error(error);
     }
 };
 

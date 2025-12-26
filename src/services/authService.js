@@ -23,7 +23,6 @@ const signUp = async (formData) => {
     }
     return data;
   } catch (err) {
-    console.log(err);
     throw new Error(err);
   }
 };
@@ -50,7 +49,6 @@ const signIn = async (user) => {
       return user;
     }
   } catch (err) {
-    console.log(err);
     throw new Error(err);
   }
 };

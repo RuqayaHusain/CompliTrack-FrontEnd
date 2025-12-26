@@ -1,27 +1,28 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { showAllLicenses } from "../../services/licenseService";
+import { showAllComplianceTasks } from "../../services/complianceTaskService";
+import ComplianceTaskCard from "../ComplianceTaskCard/ComplianceTaskCard";
 import Filter from "../Filter/Filter";
-import LicenseCard from "../LicenseCard/LicenseCard";
-import styles from "./LicenseList.module.css";
+import styles from "./ComplianceTaskList.module.css";
 
-const LicenseList = () => {
+
+const ComplianceTaskList = () => {
     const { businessId } = useParams();
-    const [licenses, setLicenses] = useState([]);
+    const [tasks, setTasks] = useState([]);
     const [filter, setFilter] = useState({
-        name: '',
-        license_status: '',
-        expiry_before: '',
-        expiry_after: ''
+        title: '',
+        task_status: '',
+        due_before: '',
+        due_after: ''
     });
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchLicenses = async () => {
-            const licenseData = await showAllLicenses(businessId, filter);
-            setLicenses(licenseData);
+        const fetchTasks = async () => {
+            const taskData = await showAllComplianceTasks(businessId, filter);
+            setTasks(taskData);
         };
-        if (businessId) fetchLicenses();
+        if (businessId) fetchTasks();
     }, [businessId, filter]);
 
     const handleFilterChange = (evt) => {
@@ -34,50 +35,50 @@ const LicenseList = () => {
 
     const handleClearFilters = () => {
         setFilter({
-            name: '',
-            license_status: '',
-            expiry_before: '',
-            expiry_after: '',
+            title: '',
+            task_status: '',
+            due_before: '',
+            due_after: '',
         });
     };
 
     return (
         <section className={styles.container}>
             <div className={styles.header}>
-                <h2 className={styles.title}>Licenses</h2>
+                <h2 className={styles.title}>Compliance Tasks</h2>
                 <button
                     className={styles.addButton}
                     onClick={() =>
-                        navigate(`/businesses/${businessId}/licenses/new`)
+                        navigate(`/businesses/${businessId}/compliance-tasks/new`)
                     }
                 >
-                    + Add License
+                    + Add Compliance Task
                 </button>
             </div>
 
             <Filter
-                type="license"
+                type='task'
                 filter={filter}
                 handleFilterChange={handleFilterChange}
                 handleClearFilters={handleClearFilters}
             />
 
-            {licenses.length === 0 ? (
+            {tasks.length === 0 ? (
                 <div className={styles.empty}>
-                    <p>No licenses found.</p>
-                    {(filter.name ||
-                        filter.license_status ||
-                        filter.expiry_before ||
-                        filter.expiry_after) && (
+                    <p>No compliance tasks found.</p>
+                    {(filter.title ||
+                        filter.task_status ||
+                        filter.due_before ||
+                        filter.due_after) && (
                             <small>Try adjusting your filters.</small>
                         )}
                 </div>
             ) : (
                 <div className={styles.grid}>
-                    {licenses.map(license => (
-                        <LicenseCard
-                            key={license.id}
-                            license={license}
+                    {tasks.map((task) => (
+                        <ComplianceTaskCard
+                            key={task.id}
+                            task={task}
                             businessId={businessId}
                         />
                     ))}
@@ -87,4 +88,4 @@ const LicenseList = () => {
     );
 };
 
-export default LicenseList;
+export default ComplianceTaskList;

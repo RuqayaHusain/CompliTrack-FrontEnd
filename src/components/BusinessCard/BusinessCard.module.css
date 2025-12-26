@@ -1,0 +1,112 @@
+.link,
+.link:hover {
+    text-decoration: none;
+}
+
+.card {
+    background-color: var(--surface);
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+    border-left: 6px solid var(--primary);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-decoration: none;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-dark);
+}
+
+.industry {
+    font-size: 0.85rem;
+    color: var(--gray-medium);
+}
+
+.stats {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(56, 115, 255, 0.15);
+    color: var(--primary-dark);
+    font-size: 0.7rem;
+    font-weight: 400;
+    padding: 0.2rem 0.45rem;
+    border-radius: 999px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.badge:hover {
+    transform: translateY(-1px);
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.detailsButton {
+    background-color: rgba(56, 115, 255, 0.15);
+    color: var(--primary-dark);
+    border: none;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.detailsButton:hover {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+    .card {
+        padding: 1rem;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+
+    .name {
+        font-size: 1rem;
+    }
+
+    .footer {
+        justify-content: center;
+    }
+}

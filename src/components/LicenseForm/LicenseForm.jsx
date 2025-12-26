@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { createLicense, showLicense, updateLicense } from "../../services/licenseService";
+import styles from "./LicenseForm.module.css";
+
 const LicenseForm = () => {
-    const { businessId , licenseId } = useParams();
+    const { businessId, licenseId } = useParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
@@ -12,25 +14,25 @@ const LicenseForm = () => {
         status: 'Valid',
     });
     const [validationMessage, setValidationMessage] = useState('');
-    
+
     const isEditMode = Boolean(licenseId);
 
     useEffect(() => {
-     const fetchLicense = async () => {
-        if (licenseId) {
-            const licenseData = await showLicense(businessId, licenseId);
-            setFormData({
-                name: licenseData.name,
-                description: licenseData.description || '',
-                issue_date: licenseData.issue_date ? licenseData.issue_date.split('T')[0] : '',
-                expiry_date: licenseData.expiry_date ? licenseData.expiry_date.split('T')[0] : '',
-                status: licenseData.status,
-            });
-        }
-     };
-     fetchLicense();
+        const fetchLicense = async () => {
+            if (licenseId) {
+                const licenseData = await showLicense(businessId, licenseId);
+                setFormData({
+                    name: licenseData.name,
+                    description: licenseData.description || '',
+                    issue_date: licenseData.issue_date ? licenseData.issue_date.split('T')[0] : '',
+                    expiry_date: licenseData.expiry_date ? licenseData.expiry_date.split('T')[0] : '',
+                    status: licenseData.status,
+                });
+            }
+        };
+        fetchLicense();
     }, [businessId, licenseId]);
-    
+
     const handleChange = (evt) => {
         setFormData({
             ...formData,
@@ -49,74 +51,72 @@ const LicenseForm = () => {
         const expiryDate = new Date(formData.expiry_date);
 
         if (expiryDate <= issueDate) return setValidationMessage('Expiry date must be after issue date');
-                
-       if (isEditMode) {
-             await updateLicense(businessId, licenseId, formData);
+
+        if (isEditMode) {
+            await updateLicense(businessId, licenseId, formData);
+            navigate(`/businesses/${businessId}/licenses/${licenseId}`);
         } else {
-             await createLicense(businessId, formData);
+            await createLicense(businessId, formData);
+            navigate(`/businesses/${businessId}`, { state: { activeTab: 'licenses' } });
         }
-         navigate(`/businesses/${businessId}`);
-        };
+    };
+
+    const handleCancelButton = () => {
+        if (isEditMode) {
+            navigate(`/businesses/${businessId}/licenses/${licenseId}`);
+        } else {
+            navigate(`/businesses/${businessId}`, { state: { activeTab: 'licenses' } });
+        }
+    };
 
     return (
-        <main>
-            <h1>{isEditMode ? 'Edit License' : 'Add License'}</h1>
-            {validationMessage && <p>{validationMessage}</p>}
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="name">Name:</label>
-                <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                />
+        <main className={styles.container}>
+            <div className={styles.card}>
+                <h1 className={styles.title}>{isEditMode ? 'Edit License' : 'Add License'}</h1>
+                {validationMessage && <p className={styles.validation}>{validationMessage}</p>}
 
-                <label htmlFor="description">Description:</label>
-                <textarea
-                    name="description"
-                    id="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                />
+                <form className={styles.form} onSubmit={handleSubmit}>
+                    <div className={styles.field}>
+                        <label htmlFor="name">Name</label>
+                        <input id="name" name="name" value={formData.name} onChange={handleChange} required />
+                    </div>
 
-                <label htmlFor="issue_date">Issue Date:</label>
-                <input
-                    type="date"
-                    name="issue_date"
-                    id="issue_date"
-                    value={formData.issue_date}
-                    onChange={handleChange}
-                    required
-                />
+                    <div className={styles.field}>
+                        <label htmlFor="description">Description</label>
+                        <textarea id="description" name="description" value={formData.description} onChange={handleChange} />
+                    </div>
 
-                <label htmlFor="expiry_date">Expiry Date:</label>
-                <input
-                    type="date"
-                    name="expiry_date"
-                    id="expiry_date"
-                    value={formData.expiry_date}
-                    onChange={handleChange}
-                    required
-                />
+                    <div className={styles.field}>
+                        <label htmlFor="issue_date">Issue Date</label>
+                        <input type="date" id="issue_date" name="issue_date" value={formData.issue_date} onChange={handleChange} required />
+                    </div>
 
-                <label htmlFor="status">Status:</label>
-                <select
-                    name="status"
-                    id="status"
-                    value={formData.status}
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="Valid">Valid</option>
-                    <option value="Expired">Expired</option>
-                    <option value="Pending Renewal">Pending Renewal</option>
+                    <div className={styles.field}>
+                        <label htmlFor="expiry_date">Expiry Date</label>
+                        <input type="date" id="expiry_date" name="expiry_date" value={formData.expiry_date} onChange={handleChange} required />
+                    </div>
 
-                </select>
+                    <div className={styles.field}>
+                        <label htmlFor="status">Status</label>
+                        <select id="status" name="status" value={formData.status} onChange={handleChange} required>
+                            <option value="Valid">Valid</option>
+                            <option value="Expired">Expired</option>
+                            <option value="Pending Renewal">Pending Renewal</option>
+                        </select>
+                    </div>
 
-                <button type="submit">Submit</button>
-            </form>
+                    <div className={styles.buttonGroup}>
+                        <button type="submit" className={styles.submitButton}>Submit</button>
+                        <button
+                            type="button"
+                            className={styles.cancelButton}
+                            onClick={handleCancelButton}
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
         </main>
     );
 };

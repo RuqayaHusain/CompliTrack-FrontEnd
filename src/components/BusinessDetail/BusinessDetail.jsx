@@ -1,9 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams , useLocation } from "react-router";
+import { useNavigate, useParams, useLocation } from "react-router";
 import { UserContext } from "../../contexts/UserContext";
 import { showBusiness } from "../../services/businessService";
 import LicenseList from "../LicenseList/LicenseList";
-import ComplianceTaskList from "../ComplianceTask/ComplianceTaskList";
+import ComplianceTaskList from "../ComplianceTaskList/ComplianceTaskList";
+import styles from './BusinessDetail.module.css';
 
 const BusinessDetail = ({ handleDeleteBusiness }) => {
     const { businessId } = useParams();
@@ -11,7 +12,7 @@ const BusinessDetail = ({ handleDeleteBusiness }) => {
 
     const [business, setBusiness] = useState(null);
     const location = useLocation();
-    const [activeTab, setActiveTab] = useState(location.state?.activeTab || 'details');    const navigate = useNavigate();
+    const [activeTab, setActiveTab] = useState(location.state?.activeTab || 'details'); const navigate = useNavigate();
 
     useEffect(() => {
         const fetchBusiness = async () => {
@@ -21,56 +22,82 @@ const BusinessDetail = ({ handleDeleteBusiness }) => {
         if (businessId) fetchBusiness();
     }, [businessId]);
 
-    if (!business) return <h3>Loading ...</h3>
+    if (!business) return <h3 className={styles.loading}>Loading ...</h3>
 
 
     const isOwner = user && business.user_id === user.id;
 
     return (
-        <main>
-            <h1>{business.name}</h1>
+        <main className={styles.container}>
+            <div className={styles.header}>
+                <h1 className={styles.title}>{business.name}</h1>
+                {isOwner && (
+                    <div className={styles.actions}>
+                        <button
+                            className={`${styles.button} ${styles.edit}`}
+                            onClick={() => navigate(`/businesses/edit/${businessId}`)}
+                        >
+                            Edit
+                        </button>
+                        <button
+                            className={`${styles.button} ${styles.delete}`}
+                            onClick={() => handleDeleteBusiness(businessId)}
+                        >
+                            Delete
+                        </button>
+                    </div>
+                )}
+            </div>
 
-            <div>
-                <button onClick={() => setActiveTab('details')}>Business Details</button>
-                <button onClick={() => setActiveTab('licenses')}>Licenses</button>
-                <button onClick={() => setActiveTab('tasks')}>Compliance Tasks</button>
+            <div className={styles.tabs}>
+                <button
+                    className={`${styles.tab} ${activeTab === 'details' ? styles.activeTab : ''}`}
+                    onClick={() => setActiveTab('details')}
+                >
+                    Business Details
+                </button>
+                <button
+                    className={`${styles.tab} ${activeTab === 'licenses' ? styles.activeTab : ''}`}
+                    onClick={() => setActiveTab('licenses')}
+                >
+                    Licenses
+                </button>
+                <button
+                    className={`${styles.tab} ${activeTab === 'tasks' ? styles.activeTab : ''}`}
+                    onClick={() => setActiveTab('tasks')}
+                >
+                    Compliance Tasks
+                </button>
             </div>
 
             {activeTab === 'details' && (
-                <section>
+                <section className={styles.detailsSection}>
                     {business.image_url && (
                         <img
                             src={business.image_url}
                             alt={business.name}
+                            className={styles.image}
                         />
                     )}
-                    <p>{business.description || 'No description provided.'}</p>
+                    <p className={styles.description}>{business.description || 'No description provided.'}</p>
                     <p><strong>Industry:</strong> {business.industry}</p>
                     <p><strong>CR Number:</strong> {business.cr_number}</p>
-                    {isOwner && (
-                        <div>
-                            <button onClick={() => navigate(`/businesses/edit/${businessId}`)}>Edit</button>
-                            <button onClick={() => handleDeleteBusiness(businessId)}>Delete</button>
-                        </div>
-                    )}
                 </section>
             )}
 
             {activeTab === 'licenses' && (
-                <section>
+                <section className={styles.tabSection}>
                     <LicenseList businessId={businessId} />
                 </section>
             )}
 
-           {activeTab === 'tasks' && (
-             <section>
-                  <ComplianceTaskList />
-             </section>
+            {activeTab === 'tasks' && (
+                <section className={styles.tabSection}>
+                    <ComplianceTaskList />
+                </section>
             )}
         </main>
     );
-
-
 };
 
 export default BusinessDetail;

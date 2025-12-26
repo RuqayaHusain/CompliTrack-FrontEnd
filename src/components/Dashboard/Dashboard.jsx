@@ -1,12 +1,10 @@
-// src/components/Dashboard/Dashboard.jsx
-
-import { useContext, useEffect , useState } from 'react';
-import * as userService from '../../services/userService'
+import { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../../contexts/UserContext';
 import { showAllBusinesses } from '../../services/businessService';
 import { showAllLicenses } from '../../services/licenseService';
 import { showAllComplianceTasks } from '../../services/complianceTaskService';
 import { useNavigate } from 'react-router';
+import styles from './Dashboard.module.css';
 
 const Dashboard = () => {
   const { user } = useContext(UserContext);
@@ -16,7 +14,7 @@ const Dashboard = () => {
   const [allTasks, setAllTasks] = useState([]);
   const [loading, setLoading] = useState(true);
 
-   useEffect(() => {
+  useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         const businessData = await showAllBusinesses();
@@ -28,7 +26,7 @@ const Dashboard = () => {
         for (const business of businessData) {
           const businessLicenses = await showAllLicenses(business.id);
           const businessTasks = await showAllComplianceTasks(business.id);
-          
+
           licenses.push(...businessLicenses.map(l => ({ ...l, businessName: business.name, businessId: business.id })));
           tasks.push(...businessTasks.map(t => ({ ...t, businessName: business.name, businessId: business.id })));
         }
@@ -58,94 +56,175 @@ const Dashboard = () => {
     return targetDate < today;
   };
 
-  const overdueLicenses = allLicenses.filter(l => 
+  const overdueLicenses = allLicenses.filter(l =>
     l.status === 'Expired' || isOverdue(l.expiry_date)
   );
 
-  const expiringSoonLicenses = allLicenses.filter(l => 
+  const expiringSoonLicenses = allLicenses.filter(l =>
     l.status !== 'Expired' && isExpiringSoon(l.expiry_date)
   );
 
-  const overdueTasks = allTasks.filter(t => 
+  const overdueTasks = allTasks.filter(t =>
     (t.status === 'Pending' || t.status === 'Late') && isOverdue(t.due_date)
   );
 
-  const upcomingTasks = allTasks.filter(t => 
+  const upcomingTasks = allTasks.filter(t =>
     t.status === 'Pending' && !isOverdue(t.due_date)
   ).slice(0, 5);
 
-  if (loading) return <main><h3>Loading dashboard...</h3></main>;
-
+  if (loading) {
+    return (
+      <main className={styles.dashboard}>
+        <h3 className={styles.empty}>Loading dashboard...</h3>
+      </main>
+    );
+  }
   return (
-    <main>
-      <h1>Welcome, {user.username}</h1>
-      <p>Dashboard Overview - {businesses.length} businesses tracked</p>
+    <main className={styles.dashboard}>
 
-      <section>
-        <h2> Expired Licenses ({overdueLicenses.length})</h2>
+      <header className={styles.header}>
+        <h1>Welcome, {user.username}</h1>
+        <p>Dashboard Overview - {businesses.length} businesses tracked</p>
+      </header>
+
+      <section className={styles.section}>
+
+        <div className={styles.sectionHeader}>
+          <h2> Expired Licenses ({overdueLicenses.length})</h2>
+        </div>
+
         {overdueLicenses.length > 0 ? (
-          overdueLicenses.map(license => (
-            <article key={license.id}>
-              <h3>{license.name}</h3>
-              <p>Business: {license.businessName}</p>
-              <p>Status: {license.status}</p>
-              <p>Expired: {new Date(license.expiry_date).toLocaleDateString()}</p>
-              <button onClick={() => navigate(`/businesses/${license.businessId}`)}>View Business</button>
-            </article>
-          ))
+          <div className={styles.cardGrid}>
+            {overdueLicenses.map(license => (
+              <article
+                key={license.id}
+                className={`${styles.card} ${styles.expired}`}
+              >
+                <h3>{license.name}</h3>
+                <p>Business: {license.businessName}</p>
+                <p>Status: {license.status}</p>
+                <p>
+                  Expired:{' '}
+                  {new Date(license.expiry_date).toLocaleDateString()}
+                </p>
+                <button
+                  className={styles.button}
+                  onClick={() =>
+                    navigate(`/businesses/${license.businessId}`)
+                  }
+                >
+                  View Business
+                </button>
+              </article>
+            ))}
+          </div>
         ) : (
-          <p>No overdue or expired licenses.</p>
+          <p className={styles.empty}>No overdue or expired licenses.</p>
         )}
       </section>
 
-      <section>
-        <h2> Overdue Tasks ({overdueTasks.length})</h2>
+      <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2>Overdue Tasks ({overdueTasks.length})</h2>
+        </div>
+
         {overdueTasks.length > 0 ? (
-          overdueTasks.map(task => (
-            <article key={task.id}>
-              <h3>{task.title}</h3>
-              <p>Business: {task.businessName}</p>
-              <p>Status: {task.status}</p>
-              <p>Due: {new Date(task.due_date).toLocaleDateString()}</p>
-              <button onClick={() => navigate(`/businesses/${task.businessId}`)}>View Business</button>
-            </article>
-          ))
+          <div className={styles.cardGrid}>
+            {overdueTasks.map(task => (
+              <article
+                key={task.id}
+                className={`${styles.card} ${styles.overdue}`}
+              >
+                <h3>{task.title}</h3>
+                <p>Business: {task.businessName}</p>
+                <p>Status: {task.status}</p>
+                <p>
+                  Due: {new Date(task.due_date).toLocaleDateString()}
+                </p>
+                <button
+                  className={styles.button}
+                  onClick={() =>
+                    navigate(`/businesses/${task.businessId}`)
+                  }
+                >
+                  View Business
+                </button>
+              </article>
+            ))}
+          </div>
         ) : (
-          <p>No overdue tasks.</p>
+          <p className={styles.empty}>No overdue tasks.</p>
         )}
       </section>
 
-      <section>
-        <h2> Expiring Soon Licenses ({expiringSoonLicenses.length})</h2>
+      <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2>
+            Expiring Soon Licenses ({expiringSoonLicenses.length})
+          </h2>
+        </div>
+
         {expiringSoonLicenses.length > 0 ? (
-          expiringSoonLicenses.map(license => (
-            <article key={license.id}>
-              <h3>{license.name}</h3>
-              <p>Business: {license.businessName}</p>
-              <p>Status: {license.status}</p>
-              <p>Expires: {new Date(license.expiry_date).toLocaleDateString()}</p>
-              <button onClick={() => navigate(`/businesses/${license.businessId}`)}>View Business</button>
-            </article>
-          ))
+          <div className={styles.cardGrid}>
+            {expiringSoonLicenses.map(license => (
+              <article
+                key={license.id}
+                className={`${styles.card} ${styles.warning}`}
+              >
+                <h3>{license.name}</h3>
+                <p>Business: {license.businessName}</p>
+                <p>Status: {license.status}</p>
+                <p>
+                  Expires:{' '}
+                  {new Date(license.expiry_date).toLocaleDateString()}
+                </p>
+                <button
+                  className={styles.button}
+                  onClick={() =>
+                    navigate(`/businesses/${license.businessId}`)
+                  }
+                >
+                  View Business
+                </button>
+              </article>
+            ))}
+          </div>
         ) : (
-          <p>No licenses expiring soon.</p>
+          <p className={styles.empty}>No licenses expiring soon.</p>
         )}
       </section>
 
-      <section>
-        <h2>Upcoming Tasks ({upcomingTasks.length})</h2>
+      <section className={styles.section}>
+        <div className={styles.sectionHeader}>
+          <h2>Upcoming Tasks ({upcomingTasks.length})</h2>
+        </div>
+
         {upcomingTasks.length > 0 ? (
-          upcomingTasks.map(task => (
-            <article key={task.id}>
-              <h3>{task.title}</h3>
-              <p>Business: {task.businessName}</p>
-              <p>Status: {task.status}</p>
-              <p>Due: {new Date(task.due_date).toLocaleDateString()}</p>
-              <button onClick={() => navigate(`/businesses/${task.businessId}`)}>View Business</button>
-            </article>
-          ))
+          <div className={styles.cardGrid}>
+            {upcomingTasks.map(task => (
+              <article
+                key={task.id}
+                className={`${styles.card} ${styles.upcoming}`}
+              >
+                <h3>{task.title}</h3>
+                <p>Business: {task.businessName}</p>
+                <p>Status: {task.status}</p>
+                <p>
+                  Due: {new Date(task.due_date).toLocaleDateString()}
+                </p>
+                <button
+                  className={styles.button}
+                  onClick={() =>
+                    navigate(`/businesses/${task.businessId}`)
+                  }
+                >
+                  View Business
+                </button>
+              </article>
+            ))}
+          </div>
         ) : (
-          <p>No upcoming tasks.</p>
+          <p className={styles.empty}>No upcoming tasks.</p>
         )}
       </section>
     </main>

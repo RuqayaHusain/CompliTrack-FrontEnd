@@ -16,8 +16,8 @@ import BusinessForm from './components/BusinessForm/BusinessForm';
 import { createBusiness, updateBusiness, deleteBusiness } from './services/businessService';
 import LicenseList from './components/LicenseList/LicenseList';
 import LicenseForm from './components/LicenseForm/LicenseForm';
-import ComplianceTaskForm from './components/ComplianceTask/ComplianceTaskForm';
-import ComplianceTaskDetail from './components/ComplianceTask/ComplianceTaskDetail';
+import ComplianceTaskForm from './components/ComplianceTaskForm/ComplianceTaskForm';
+import ComplianceTaskDetail from './components/ComplianceTaskDetail/ComplianceTaskDetail';
 import LicenseDetail from './components/LicenseDetail/LicenseDetail';
 
 const App = () => {
@@ -58,13 +58,12 @@ const App = () => {
               <Route path='/businesses/new' element={<BusinessForm handleAddBusiness={handleAddBusiness} />} />
               <Route path='/businesses/edit/:businessId' element={<BusinessForm handleUpdateBusiness={handleUpdateBusiness} />} />
               <Route path='/businesses/:businessId/licenses' element={<LicenseList />} />
+              <Route path='/businesses/:businessId/licenses/:licenseId' element={<LicenseDetail />} />
               <Route path='/businesses/:businessId/licenses/new' element={<LicenseForm />} />
               <Route path='/businesses/:businessId/compliance-tasks/new' element={<ComplianceTaskForm />} />
               <Route path='/businesses/:businessId/licenses/edit/:licenseId' element={<LicenseForm />} />
               <Route path='/businesses/:businessId/compliance-tasks/edit/:taskId' element={<ComplianceTaskForm />} />
               <Route path='/businesses/:businessId/compliance-tasks/:taskId' element={<ComplianceTaskDetail />} />
-
-              <Route path='/businesses/:businessId/licenses/:licenseId' element={<LicenseDetail />} />
             </>
             :
             <Route path='/' element={<Landing />} />

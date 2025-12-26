@@ -1,0 +1,146 @@
+.container {
+    min-height: calc(100vh - 64px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.card {
+    width: 100%;
+    max-width: 650px;
+    background-color: var(--surface);
+    padding: 3rem 3.5rem;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--gray-dark);
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: var(--gray-medium);
+    margin-bottom: 2rem;
+    line-height: 1.5;
+}
+
+.features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2.5rem 0;
+    text-align: left;
+}
+
+.features li {
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    color: var(--gray-dark);
+    display: flex;
+    align-items: center;
+}
+
+.features li::before {
+    margin-right: 0.5rem;
+    color: var(--primary);
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.button {
+    padding: 0.7rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.25s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    max-width: 180px;
+}
+
+.primary {
+    background-color: var(--primary);
+    color: white;
+}
+
+.primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.secondary {
+    background-color: var(--surface);
+    color: var(--gray-dark);
+    border-color: var(--gray-light);
+}
+
+.secondary:hover {
+    background-color: var(--gray-light);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .card {
+        padding: 2rem 2rem;
+    }
+
+    .title {
+        font-size: 1.85rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .features li {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        padding: 1.5rem 1.5rem;
+        border-radius: 12px;
+    }
+
+    .title {
+        font-size: 1.6rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .features li {
+        font-size: 0.9rem;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .button {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
