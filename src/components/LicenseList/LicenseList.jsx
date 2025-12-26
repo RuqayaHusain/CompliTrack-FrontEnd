@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { showAllLicenses } from "../../services/licenseService";
 import Filter from "../Filter/Filter";
 import LicenseCard from "../LicenseCard/LicenseCard";
+import styles from "./LicenseList.module.css";
 
 const LicenseList = () => {
     const { businessId } = useParams();
@@ -41,43 +42,39 @@ const LicenseList = () => {
     };
 
     return (
-        <main>
-            <div>
-                <h2>Licenses</h2>
+        <section className={styles.container}>
+            <div className={styles.header}>
+                <h2 className={styles.title}>Licenses</h2>
                 <button
+                    className={styles.addButton}
                     onClick={() =>
                         navigate(`/businesses/${businessId}/licenses/new`)
                     }
                 >
-                    Add License
+                    + Add License
                 </button>
             </div>
 
-            <div>
-                <Filter
-                    type='license'
-                    filter={filter}
-                    handleFilterChange={handleFilterChange}
-                    handleClearFilters={handleClearFilters}
-                />
-            </div>
+            <Filter
+                type="license"
+                filter={filter}
+                handleFilterChange={handleFilterChange}
+                handleClearFilters={handleClearFilters}
+            />
 
             {licenses.length === 0 ? (
-                <div>
-                    <p>
-                        No licenses found.
-                        {filter.name ||
-                            filter.license_status ||
-                            filter.expiry_before ||
-                            filter.expiry_after
-                            ? " Try different filters."
-                            : " Add your first license!"}
-                    </p>
-                    
+                <div className={styles.empty}>
+                    <p>No licenses found.</p>
+                    {(filter.name ||
+                        filter.license_status ||
+                        filter.expiry_before ||
+                        filter.expiry_after) && (
+                            <small>Try adjusting your filters.</small>
+                        )}
                 </div>
             ) : (
-                <div>
-                    {licenses.map((license) => (
+                <div className={styles.grid}>
+                    {licenses.map(license => (
                         <LicenseCard
                             key={license.id}
                             license={license}
@@ -86,7 +83,7 @@ const LicenseList = () => {
                     ))}
                 </div>
             )}
-        </main>
+        </section>
     );
 };
 

@@ -171,7 +171,7 @@ const BusinessForm = ({ handleAddBusiness, handleUpdateBusiness }) => {
                         </div>
                     </div>
 
-                    <button type="submit" className={styles.submitButton}>Submit</button>
+                    <button type="submit">Submit</button>
                 </form>
             </div>
         </main>

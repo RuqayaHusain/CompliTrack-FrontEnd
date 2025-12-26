@@ -3,9 +3,10 @@ import styles from './Filter.module.css';
 const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
 
     return (
-        <div className={styles.container}>
+        <>
             {type === "business" && (
-                <>
+                <div className={styles.container}>
+
                     <h3 className={styles.header}>Filter Businesses</h3>
                     <div className={styles.field}>
                         <label htmlFor="name">Name</label>
@@ -39,11 +40,13 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
                             <option value="Professional Services">Professional Services</option>
                         </select>
                     </div>
-                </>
+                    <button onClick={handleClearFilters} className={styles.button}>Clear Filters</button>
+                </div>
             )}
 
             {type === "license" && (
-                <>
+                <div className={`${styles.container} ${styles.innerFilter}`}>
+
                     <h3 className={styles.header}>Filter Licenses</h3>
 
                     <div className={styles.field}>
@@ -94,11 +97,13 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
                             onChange={handleFilterChange}
                         />
                     </div>
-                </>
+                    <button onClick={handleClearFilters} className={styles.button}>Clear Filters</button>
+                </div>
             )}
 
             {type === "task" && (
-                <>
+                <div className={`${styles.container} ${styles.innerFilter}`}>
+
                     <h3 className={styles.header}>Filter Compliance Tasks</h3>
 
                     <div className={styles.field}>
@@ -149,11 +154,11 @@ const Filter = ({ type, filter, handleFilterChange, handleClearFilters }) => {
                             onChange={handleFilterChange}
                         />
                     </div>
-                </>
-            )}
+                    <button onClick={handleClearFilters} className={styles.button}>Clear Filters</button>
+                </div>
 
-            <button onClick={handleClearFilters} className={styles.button}>Clear Filters</button>
-        </div>
+            )}
+        </>
     );
 };
 

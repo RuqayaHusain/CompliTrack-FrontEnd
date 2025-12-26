@@ -63,6 +63,10 @@ select:focus {
     color: var(--primary-dark);
 }
 
+.innerFilter {
+    background-color: #f1f5fb;
+}
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
