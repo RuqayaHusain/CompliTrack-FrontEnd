@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { showAllComplianceTasks } from "../../services/complianceTaskService";
 import ComplianceTaskCard from "../ComplianceTaskCard/ComplianceTaskCard";
 import Filter from "../Filter/Filter";
+import styles from "./ComplianceTaskList.module.css";
 
 
 const ComplianceTaskList = () => {
@@ -42,42 +43,38 @@ const ComplianceTaskList = () => {
     };
 
     return (
-        <main>
-            <div>
-                <h2>Compliance Tasks</h2>
+        <section className={styles.container}>
+            <div className={styles.header}>
+                <h2 className={styles.title}>Compliance Tasks</h2>
                 <button
+                    className={styles.addButton}
                     onClick={() =>
                         navigate(`/businesses/${businessId}/compliance-tasks/new`)
                     }
                 >
-                    Add Compliance Task
+                    + Add Compliance Task
                 </button>
             </div>
 
-            <div>
-                <Filter
-                    type='task'
-                    filter={filter}
-                    handleFilterChange={handleFilterChange}
-                    handleClearFilters={handleClearFilters}
-                />
-            </div>
-
+            <Filter
+                type='task'
+                filter={filter}
+                handleFilterChange={handleFilterChange}
+                handleClearFilters={handleClearFilters}
+            />
 
             {tasks.length === 0 ? (
-                <div>
-                    <p>
-                        No compliance tasks found.
-                        {filter.title ||
-                            filter.task_status ||
-                            filter.due_before ||
-                            filter.due_after
-                            ? " Try different filters."
-                            : " Add your first task!"}
-                    </p>
+                <div className={styles.empty}>
+                    <p>No compliance tasks found.</p>
+                    {(filter.title ||
+                        filter.task_status ||
+                        filter.due_before ||
+                        filter.due_after) && (
+                            <small>Try adjusting your filters.</small>
+                        )}
                 </div>
             ) : (
-                <div>
+                <div className={styles.grid}>
                     {tasks.map((task) => (
                         <ComplianceTaskCard
                             key={task.id}
@@ -87,7 +84,7 @@ const ComplianceTaskList = () => {
                     ))}
                 </div>
             )}
-        </main>
+        </section>
     );
 };
 

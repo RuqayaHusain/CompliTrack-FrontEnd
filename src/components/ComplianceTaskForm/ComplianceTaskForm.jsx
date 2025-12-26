@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
 import { createComplianceTask, showComplianceTask, updateComplianceTask } from "../../services/complianceTaskService";
+import styles from "./ComplianceTaskForm.module.css";
 
 const ComplianceTaskForm = () => {
     const { businessId, taskId } = useParams();
@@ -61,66 +62,77 @@ const ComplianceTaskForm = () => {
     };
 
     return (
-        <main>
-            <h1>{isEditMode ? 'Edit Compliance Task' : 'Add Compliance Task'}</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="title">Title:</label>
-                <input
-                    type="text"
-                    name="title"
-                    id="title"
-                    value={formData.title}
-                    onChange={handleChange}
-                    required
-                />
+        <main className={styles.container}>
+            <div className={styles.card}>
+                <h1 className={styles.title}>
+                    {isEditMode ? 'Edit Compliance Task' : 'Add Compliance Task'}
+                </h1>
 
-                <label htmlFor="description">Description:</label>
-                <textarea
-                    name="description"
-                    id="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    required
-                />
-
-                <label htmlFor="due_date">Due Date:</label>
-                <input
-                    type="date"
-                    name="due_date"
-                    id="due_date"
-                    value={formData.due_date}
-                    onChange={handleChange}
-                    required
-                />
-
-                <label htmlFor="status">Status:</label>
-                <select
-                    name="status"
-                    id="status"
-                    value={formData.status}
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="Pending">Pending</option>
-                    <option value="Submitted">Submitted</option>
-                    <option value="Late">Late</option>
-                </select>
-
-                {formData.status === 'Submitted' && (
-                    <>
-                        <label htmlFor="submission_date">Submission Date:</label>
+                <form className={styles.form} onSubmit={handleSubmit}>
+                    <div className={styles.field}>
+                        <label htmlFor="title">Title</label>
                         <input
-                            type="date"
-                            name="submission_date"
-                            id="submission_date"
-                            value={formData.submission_date}
+                            id="title"
+                            name="title"
+                            value={formData.title}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    <div className={styles.field}>
+                        <label htmlFor="description">Description</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            value={formData.description}
                             onChange={handleChange}
                         />
-                    </>
-                )}
+                    </div>
 
-                <button type="submit">Submit</button>
-            </form>
+                    <div className={styles.field}>
+                        <label htmlFor="due_date">Due Date</label>
+                        <input
+                            type="date"
+                            id="due_date"
+                            name="due_date"
+                            value={formData.due_date}
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    <div className={styles.field}>
+                        <label htmlFor="status">Status</label>
+                        <select
+                            id="status"
+                            name="status"
+                            value={formData.status}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="Pending">Pending</option>
+                            <option value="Submitted">Submitted</option>
+                            <option value="Late">Late</option>
+                        </select>
+                    </div>
+
+                    {formData.status === 'Submitted' && (
+                        <div className={styles.field}>
+                            <label htmlFor="submission_date">Submission Date</label>
+                            <input
+                                type="date"
+                                name="submission_date"
+                                id="submission_date"
+                                value={formData.submission_date}
+                                onChange={handleChange}
+                            />
+                        </div>
+                    )}
+
+                    <button type="submit" className={styles.submitButton}>Submit</button>
+                </form>
+            </div>
         </main>
     );
 };
