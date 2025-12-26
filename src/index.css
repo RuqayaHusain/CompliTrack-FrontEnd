@@ -1,0 +1,60 @@
+:root {
+  --primary: #2563eb;
+  --primary-light: #93c5fd;
+  --primary-dark: #1e40af;
+
+  --accent-success: #22c55e;
+  --accent-warning: #eab308;
+  --accent-danger: #dc2626;
+  --accent-info: #0ea5e9;
+
+  --gray-dark: #111827;
+  --gray-medium: #4b5563;
+  --gray-light: #e5e7eb;
+
+  --background: #f9fafb;
+  --surface: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--background);
+  color: var(--gray-dark);
+  height: 100%;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button {
+  font-family: inherit;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: var(--primary-dark);
+}
+
+small {
+  color: var(--gray-medium);
+}
