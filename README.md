@@ -1,6 +1,7 @@
 # CompliTrack – Frontend
 
 ## 📸 Screenshot / Logo
+<img width="1511" height="825" alt="Screenshot 2025-12-27 at 8 18 57 AM" src="https://github.com/user-attachments/assets/e1b3ec9e-5a63-427c-b719-4af9df5f57e9" />
 
 ---
 
@@ -34,7 +35,6 @@ CompliTrack simplifies this process by offering a centralized dashboard for trac
 ## 🚀 Getting Started
 
 ### 🔗 Links
-- **Deployed App:** [Deployed App]()
 - **Planning Materials:** [Planning Materials](https://trello.com/b/COMTtXoT/complitrack)
 - **Backend Repository:** [Backend Repo](https://github.com/RuqayaHusain/CompliTrack-BackEnd)
 
